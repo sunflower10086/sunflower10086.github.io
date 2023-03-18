@@ -224,6 +224,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/03/18/%E8%A7%86%E5%9B%BE/" target="_self">
+          视图
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/18/%E8%A7%86%E5%9B%BE/" target="_self">
+        <div>
+          视图的介绍和基本用法
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-18 09:25" pubdate>
+              2023-03-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">#MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/03/17/Go%E8%AF%AD%E6%B3%95/" target="_self">
           Go基础语法
         </a>
@@ -232,7 +293,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/17/Go%E8%AF%AD%E6%B3%95/" target="_self">
         <div>
-          一、首先第一个程序 Hello world1234567package mainimport &quot;fmt&quot;func main() &#123;	fmt.Println(&quot;hello world&quot;)&#125;  二、变量1.声明变量go是一门和c很相似的语言 go语言是变量是后值类型，声明变量要用var 一共有四种声明方式 123456一般方法如下var 变量
+          从Go的基础语法开始讲起
         </div>
       </a>
 
@@ -293,7 +354,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/17/Go%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" target="_self">
         <div>
-          1.闭包调试1234567891011where := func() &#123;    _, file, line, _ := runtime.Caller(1)    log.Printf(&quot;%s:%d&quot;, file, line)&#125;where()num := 10// some codef := fib()// some more codewhere()
+          Go在使用时的一些小技巧
         </div>
       </a>
 
@@ -354,7 +415,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/17/SQL%E4%BC%98%E5%8C%96/" target="_self">
         <div>
-          insert优化普通批量插入1insert into tb_name values(...),(...)...;  手动提交事务12345start transaction;insert into tb_name values(...),(...)...;insert into tb_name values(...),(...)...;insert into tb_name values(...)
+          主要讲解一些SQL语句的优化方式，有insert语句，主键优化，排序优化······
         </div>
       </a>
 
@@ -415,7 +476,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/16/%E7%B4%A2%E5%BC%95/" target="_self">
         <div>
-          索引的介绍(index)索引是帮助MySQL高效获取数的数据结构(有序) 索引的优缺点  索引的结构 B+Tree索引，最常见的索引类型，大部分引擎都支持B+书索引 Hash索引，底层是哈希表，只能精确匹配不支持范围查询 R-tree（空间索引），很少用 Full-text（全文索引），很少用  索引支持    B-Tree（多路平衡查找树） B+Tree   所有的数据都会出现在叶子节点，叶子节
+          MySQL的索引的介绍，用法，分类，使用规则，设计原则
         </div>
       </a>
 
@@ -476,7 +537,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/16/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" target="_self">
         <div>
-          1.MySQL的体系结构 连接层负责一些连接处理，安全，是否超过最大连接方案，进行授权认证 服务层引擎层可扩展 存储层2.存储引擎存储引擎就是存储数据、建立索引、更新&#x2F;查询数据等技术的实现方式。存储引擎是基于表的，而不是基于库的，所以存储引擎可以被称为表类型 使用方法123create table 表名 &#123;	...&#125; engine=innoDB  innoDBinno
+          讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍
         </div>
       </a>
 
@@ -537,7 +598,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/15/%E5%9B%BE%E8%AE%BA/" target="_self">
         <div>
-          DFSBFS树与图的深度优先遍历树与图的广度优先遍历拓扑排序Disjktrabellman-fordspfaFloydPrimKruskal染色法判定二分图匈牙利算法
+          图论中常用到的算法
         </div>
       </a>
 
@@ -598,7 +659,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" target="_self">
         <div>
-          一、单链表数组模拟链表 结构体的链表new一个消耗的时间和内存太多 用数组去模拟链表速度快，耗内存少 e[idx]存储的是编号为idx的节点的值，ne[idx]存储的是下一个点的编号，idx就是编号，head是头结点的编号 题目实现一个单链表，链表初始为空，支持三种操作：  向链表头插入一个数； 删除第 k 个插入的数后面的数； 在第 k 个插入的数后插入一个数。  现在要对该链表进行 M 次操作
+          本文介绍常用的数据结构，以及他们使用的例子
         </div>
       </a>
 
@@ -659,7 +720,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/03/15/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/" target="_self">
         <div>
-          一、快速排序1.快速排序思路 快排思路过于简单就不写了  输入样例：1253 1 2 4 5  输出样例：11 2 3 4 5   代码123456789101112131415161718192021222324252627282930313233343536373839#include &lt;iostream&gt;using namespace std;const int N = 1000
+          本文介绍一些基础算法和一些例子
         </div>
       </a>
 

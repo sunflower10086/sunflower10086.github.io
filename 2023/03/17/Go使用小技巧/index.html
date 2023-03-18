@@ -16,20 +16,20 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.闭包调试1234567891011where :&#x3D; func() &amp;#123;    _, file, line, _ :&#x3D; runtime.Caller(1)    log.Printf(&quot;%s:%d&quot;, file, line)&amp;#125;where()num :&#x3D; 10&#x2F;&#x2F; some codef :&#x3D; fib()&#x2F;&#x2F; some more codewhere()">
+    <meta name="description" content="Go在使用时的一些小技巧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go使用小技巧">
 <meta property="og:url" content="http://example.com/2023/03/17/Go%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="1.闭包调试1234567891011where :&#x3D; func() &amp;#123;    _, file, line, _ :&#x3D; runtime.Caller(1)    log.Printf(&quot;%s:%d&quot;, file, line)&amp;#125;where()num :&#x3D; 10&#x2F;&#x2F; some codef :&#x3D; fib()&#x2F;&#x2F; some more codewhere()">
+<meta property="og:description" content="Go在使用时的一些小技巧">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:\Users\wonderful\AppData\Roaming\Typora\typora-user-images\image-20230316112726283.png">
+<meta property="og:image" content="http://example.com/images/image-20230316112726283.png">
 <meta property="article:published_time" content="2023-03-17T08:41:57.049Z">
-<meta property="article:modified_time" content="2023-03-17T08:43:22.188Z">
+<meta property="article:modified_time" content="2023-03-18T00:53:40.583Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="c:\Users\wonderful\AppData\Roaming\Typora\typora-user-images\image-20230316112726283.png">
+<meta name="twitter:image" content="http://example.com/images/image-20230316112726283.png">
   
   
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          168 字
+          180 字
         
       </span>
     
@@ -276,9 +276,12 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-闭包调试"><a href="#1-闭包调试" class="headerlink" title="1.闭包调试"></a>1.闭包调试</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">where := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    _, file, line, _ := runtime.Caller(<span class="hljs-number">1</span>)<br>    log.Printf(<span class="hljs-string">&quot;%s:%d&quot;</span>, file, line)<br>&#125;<br><br>where()<br>num := <span class="hljs-number">10</span><br><span class="hljs-comment">// some code</span><br>f := fib()<br><span class="hljs-comment">// some more code</span><br>where()<br></code></pre></td></tr></table></figure>
+                <p>Go在使用时的一些小技巧</p>
+<span id="more"></span>
 
-<p><img src="C:\Users\wonderful\AppData\Roaming\Typora\typora-user-images\image-20230316112726283.png" srcset="/img/loading.gif" lazyload alt="image-20230316112726283"></p>
+<h2 id="1-闭包调试"><a href="#1-闭包调试" class="headerlink" title="1.闭包调试"></a>1.闭包调试</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">where := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    _, file, line, _ := runtime.Caller(<span class="hljs-number">1</span>)<br>    log.Printf(<span class="hljs-string">&quot;%s:%d&quot;</span>, file, line)<br>&#125;<br><br>where()<br>num := <span class="hljs-number">10</span><br><span class="hljs-comment">// some code</span><br>f := fib()<br><span class="hljs-comment">// some more code</span><br>where()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./../images/image-20230316112726283.png" srcset="/img/loading.gif" lazyload alt="image-20230316112726283"></p>
 
                 
               </div>

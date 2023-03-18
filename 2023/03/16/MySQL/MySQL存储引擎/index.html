@@ -16,24 +16,26 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="主要讲解一些SQL语句的优化方式，有insert语句，主键优化，排序优化······">
+    <meta name="description" content="讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL优化">
-<meta property="og:url" content="http://example.com/2023/03/17/SQL%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:title" content="存储引擎">
+<meta property="og:url" content="http://example.com/2023/03/16/MySQL/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="主要讲解一些SQL语句的优化方式，有insert语句，主键优化，排序优化······">
+<meta property="og:description" content="讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/image-20230317145816093.png">
-<meta property="article:published_time" content="2023-03-17T06:45:56.000Z">
-<meta property="article:modified_time" content="2023-03-18T00:54:21.921Z">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972534-WXnePu-image-20230312205207882.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972538-IdEpvH-image-20230312205604341.png">
+<meta property="article:published_time" content="2023-03-16T00:45:36.353Z">
+<meta property="article:modified_time" content="2023-03-18T00:49:19.298Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/image-20230317145816093.png">
+<meta name="twitter:image" content="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png">
   
   
   
-  <title>SQL优化 - sunflower</title>
+  <title>存储引擎 - sunflower</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="SQL优化"></span>
+            <span id="subtitle" data-typed-text="存储引擎"></span>
           
         </div>
 
@@ -210,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-17 14:45" pubdate>
-          2023年3月17日 下午
+        <time datetime="2023-03-16 08:45" pubdate>
+          2023年3月16日 早上
         </time>
       </span>
     
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          338 字
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          14 分钟
+          3 分钟
         
       </span>
     
@@ -271,55 +273,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">SQL优化</h1>
+            <h1 style="display: none">存储引擎</h1>
             
             
               <div class="markdown-body">
                 
-                <p>主要讲解一些SQL语句的优化方式，有insert语句，主键优化，排序优化······</p>
+                <p>讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍</p>
 <span id="more"></span>
 
-<h2 id="insert优化"><a href="#insert优化" class="headerlink" title="insert优化"></a>insert优化</h2><h4 id="普通批量插入"><a href="#普通批量插入" class="headerlink" title="普通批量插入"></a>普通批量插入</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tb_name <span class="hljs-keyword">values</span>(...),(...)...;<br></code></pre></td></tr></table></figure>
+<h2 id="1-MySQL的体系结构"><a href="#1-MySQL的体系结构" class="headerlink" title="1.MySQL的体系结构"></a>1.MySQL的体系结构</h2><p><img src="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png" srcset="/img/loading.gif" lazyload alt="image-20230312201507107"></p>
+<h3 id="连接层"><a href="#连接层" class="headerlink" title="连接层"></a>连接层</h3><p>负责一些连接处理，安全，是否超过最大连接方案，进行授权认证</p>
+<h3 id="服务层"><a href="#服务层" class="headerlink" title="服务层"></a>服务层</h3><h3 id="引擎层"><a href="#引擎层" class="headerlink" title="引擎层"></a>引擎层</h3><p>可扩展</p>
+<h3 id="存储层"><a href="#存储层" class="headerlink" title="存储层"></a>存储层</h3><h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2.存储引擎"></a>2.存储引擎</h2><p>存储引擎就是存储数据、建立索引、更新&#x2F;查询数据等技术的实现方式。存储引擎是基于表的，而不是基于库的，所以存储引擎可以被称为表类型</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 表名 &#123;<br>	...<br>&#125; engine<span class="hljs-operator">=</span>innoDB<br></code></pre></td></tr></table></figure>
 
-<h4 id="手动提交事务"><a href="#手动提交事务" class="headerlink" title="手动提交事务"></a>手动提交事务</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">start</span> transaction;<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tb_name <span class="hljs-keyword">values</span>(...),(...)...;<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tb_name <span class="hljs-keyword">values</span>(...),(...)...;<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> tb_name <span class="hljs-keyword">values</span>(...),(...)...;<br><span class="hljs-keyword">commit</span>;<br></code></pre></td></tr></table></figure>
-
-<h4 id="主键按照顺序插入"><a href="#主键按照顺序插入" class="headerlink" title="主键按照顺序插入"></a>主键按照顺序插入</h4><p class="note note-primary">顺序插入性能高于乱序插入</p>
-
-<h4 id="大批量插入数据"><a href="#大批量插入数据" class="headerlink" title="大批量插入数据"></a>大批量插入数据</h4><p>不推荐使用insert，推荐使用load进行插入，把本地文件中的数据插入</p>
-<p><img src="/../images/image-20230317145816093.png" srcset="/img/loading.gif" lazyload alt="image-20230317145816093"></p>
-<p>数据的结构</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql">#连接客户端的时候，加上参数 <span class="hljs-comment">--local-infile</span><br>mysql <span class="hljs-comment">--local-infile -uroot -p password</span><br>#设置全局参数local_infile为<span class="hljs-number">1</span>，开启从本地加载文件导入数据的开关<br><span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span> local_infile <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>#执行load命令<br>load data <span class="hljs-keyword">local</span> infile <span class="hljs-string">&#x27;file_pwd&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">table</span> `tb_name` fields terminated <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;,&#x27;</span> lines terminated <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;\n&#x27;</span>;<br></code></pre></td></tr></table></figure>
-
-<h2 id="主键优化"><a href="#主键优化" class="headerlink" title="主键优化"></a>主键优化</h2><ul>
-<li>尽量降低主键长度</li>
-<li>尽量选择顺序插入</li>
+<h3 id="innoDB"><a href="#innoDB" class="headerlink" title="innoDB"></a>innoDB</h3><p>innoDB兼顾高可靠和高性能</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>DML操作CRUD，遵循ACID，支持事务</li>
+<li>行级锁，提高并发访问性能</li>
+<li>支持外键</li>
 </ul>
-<h2 id="order-by优化"><a href="#order-by优化" class="headerlink" title="order by优化"></a>order by优化</h2><ul>
-<li>Using filesort</li>
+<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>他很特殊，数据存放在内存中，一旦断电数据就会消失不见，因此这些表只能作为临时表或缓存使用</p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>内存存放</li>
+<li>hash索引</li>
 </ul>
-<blockquote>
-<p>先把数据取出来然后在排序缓冲区sort buffer中完成排序操作</p>
-</blockquote>
-<ul>
-<li>Using index</li>
-</ul>
-<blockquote>
-<p>通过索引扫描直接返回有序的数据，不需要额外排序，性能高</p>
-</blockquote>
-<p>因为创建索引的时候默认是数据按照升序排列的，如果创建一个联合索引，查询的时候创建联合索引的这两个字段一个升序，一个降序，那么就会先Using index，在Using filesort</p>
-<p>因为第一个字段按照升序取出所有字段，然后再根据第二个字段进行降序排列，两个都会用到。</p>
-<p>这时我们只能再创建一个索引，在这个联合索引中第一个字段升序，第二个字段降序</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 两个默认升序<br><span class="hljs-keyword">create</span> index idx_user_age_phone <span class="hljs-keyword">on</span> tb_user(age, phone);<br><br># 只有<span class="hljs-keyword">Using</span> index<br><span class="hljs-keyword">select</span> id, age, phone <span class="hljs-keyword">from</span> tb_user <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> age <span class="hljs-keyword">asc</span>, phone <span class="hljs-keyword">asc</span>;<br># 有<span class="hljs-keyword">Using</span> index也有<span class="hljs-keyword">Using</span> filesort<br><span class="hljs-keyword">select</span> id, age, phone <span class="hljs-keyword">from</span> tb_user <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> age <span class="hljs-keyword">asc</span>, phone <span class="hljs-keyword">desc</span>;<br><br># 创建一个升序一个降序<br><span class="hljs-keyword">create</span> index idx_user_age_phone_ad <span class="hljs-keyword">on</span> tb_user(age <span class="hljs-keyword">asc</span>, phone <span class="hljs-keyword">desc</span>);<br># 此时再使用第二条<span class="hljs-keyword">sql</span>就是<span class="hljs-keyword">Using</span> index<br></code></pre></td></tr></table></figure>
+<img src="https://pic.leetcode.cn/1678972534-WXnePu-image-20230312205207882.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
 
-<h2 id="group-by优化"><a href="#group-by优化" class="headerlink" title="group by优化"></a>group by优化</h2><p>也是建立索引去优化速度</p>
-<h2 id="limit优化"><a href="#limit优化" class="headerlink" title="limit优化"></a>limit优化</h2><p>limit越往后查询代价也就越大</p>
-<p>做法：覆盖索引+子查询</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 原先的做法<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> tb_user limit <span class="hljs-number">100000</span>, <span class="hljs-number">10</span>;(<span class="hljs-number">19</span>秒)<br><br># 现在的做法<br># 子查询<br><span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> tb_user limit <span class="hljs-number">100000</span>, <span class="hljs-number">10</span>;<br><span class="hljs-keyword">select</span> s.<span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> tb_user s, (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> tb_user limit <span class="hljs-number">100000</span>, <span class="hljs-number">10</span>) a <span class="hljs-keyword">where</span> s.id <span class="hljs-operator">=</span> a.id;(<span class="hljs-number">11</span>秒)<br># 或者<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> tb_user <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> tb_user limit <span class="hljs-number">100000</span>, <span class="hljs-number">10</span>)(<span class="hljs-number">11</span>秒)<br></code></pre></td></tr></table></figure>
-
-<h2 id="count优化"><a href="#count优化" class="headerlink" title="count优化"></a>count优化</h2><p>优化思路：自己计数，比如使用redis去存储总数</p>
-<p>count(*)是最快的，count(id)其次</p>
-<h2 id="update优化-防止行锁升级为表锁"><a href="#update优化-防止行锁升级为表锁" class="headerlink" title="update优化(防止行锁升级为表锁)"></a>update优化(防止行锁升级为表锁)</h2><p>当我们开启一个事务，根据字段去update的时候，如果该字段<code>有索引且索引没有失效</code>，那么这时候这一行数据会有一个行锁，如果<code>该字段没有索引或者索引失效</code>，那么这时的行锁就会升级为表锁，大大降低了我们的并发性能，所以我们要避免这种情况的发生</p>
-
+<h3 id="存储引擎的选择"><a href="#存储引擎的选择" class="headerlink" title="存储引擎的选择"></a>存储引擎的选择</h3><img src="https://pic.leetcode.cn/1678972538-IdEpvH-image-20230312205604341.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
                 
               </div>
             
@@ -364,8 +345,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>SQL优化</div>
-      <div>http://example.com/2023/03/17/SQL优化/</div>
+      <div>存储引擎</div>
+      <div>http://example.com/2023/03/16/MySQL/MySQL存储引擎/</div>
     </div>
     <div class="license-meta">
       
@@ -377,7 +358,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月17日</div>
+          <div>2023年3月16日</div>
         </div>
       
       
@@ -409,9 +390,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/17/Go%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="Go使用小技巧">
+                      <a href="/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/" title="索引">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go使用小技巧</span>
+                        <span class="hidden-mobile">索引</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -419,8 +400,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/16/%E7%B4%A2%E5%BC%95/" title="索引">
-                        <span class="hidden-mobile">索引</span>
+                      <a href="/2023/03/15/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE/%E5%9B%BE%E8%AE%BA/" title="图论">
+                        <span class="hidden-mobile">图论</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

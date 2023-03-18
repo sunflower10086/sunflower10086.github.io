@@ -16,26 +16,29 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍">
+    <meta name="description" content="MySQL的索引的介绍，用法，分类，使用规则，设计原则">
 <meta property="og:type" content="article">
-<meta property="og:title" content="存储引擎">
-<meta property="og:url" content="http://example.com/2023/03/16/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
+<meta property="og:title" content="索引">
+<meta property="og:url" content="http://example.com/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍">
+<meta property="og:description" content="MySQL的索引的介绍，用法，分类，使用规则，设计原则">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png">
-<meta property="og:image" content="https://pic.leetcode.cn/1678972534-WXnePu-image-20230312205207882.png">
-<meta property="og:image" content="https://pic.leetcode.cn/1678972538-IdEpvH-image-20230312205604341.png">
-<meta property="article:published_time" content="2023-03-16T00:45:36.353Z">
-<meta property="article:modified_time" content="2023-03-18T00:49:19.298Z">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972542-NFPcGU-image-20230312211403026.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972546-gXoTeY-image-20230313102115108.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972847-GlAMcP-image-20230313104227424.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972550-JHAEGS-image-20230313104418596.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972553-uKszpw-image-20230313104950790.png">
+<meta property="og:image" content="https://pic.leetcode.cn/1678972980-aPKjQH-image-20230316210549569.png">
+<meta property="article:published_time" content="2023-03-16T00:47:29.705Z">
+<meta property="article:modified_time" content="2023-03-18T00:50:53.306Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png">
+<meta name="twitter:image" content="https://pic.leetcode.cn/1678972542-NFPcGU-image-20230312211403026.png">
   
   
   
-  <title>存储引擎 - sunflower</title>
+  <title>索引 - sunflower</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="存储引擎"></span>
+            <span id="subtitle" data-typed-text="索引"></span>
           
         </div>
 
@@ -212,7 +215,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-16 08:45" pubdate>
+        <time datetime="2023-03-16 08:47" pubdate>
           2023年3月16日 早上
         </time>
       </span>
@@ -224,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          338 字
+          2k 字
         
       </span>
     
@@ -235,7 +238,7 @@
         
         
         
-          3 分钟
+          17 分钟
         
       </span>
     
@@ -273,34 +276,137 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">存储引擎</h1>
+            <h1 style="display: none">索引</h1>
             
             
               <div class="markdown-body">
                 
-                <p>讲解MySQL的体系结构，MySQL的几个存储引擎的基本介绍</p>
+                <p>MySQL的索引的介绍，用法，分类，使用规则，设计原则</p>
 <span id="more"></span>
 
-<h2 id="1-MySQL的体系结构"><a href="#1-MySQL的体系结构" class="headerlink" title="1.MySQL的体系结构"></a>1.MySQL的体系结构</h2><p><img src="https://pic.leetcode.cn/1678972529-PfifUf-image-20230312201507107.png" srcset="/img/loading.gif" lazyload alt="image-20230312201507107"></p>
-<h3 id="连接层"><a href="#连接层" class="headerlink" title="连接层"></a>连接层</h3><p>负责一些连接处理，安全，是否超过最大连接方案，进行授权认证</p>
-<h3 id="服务层"><a href="#服务层" class="headerlink" title="服务层"></a>服务层</h3><h3 id="引擎层"><a href="#引擎层" class="headerlink" title="引擎层"></a>引擎层</h3><p>可扩展</p>
-<h3 id="存储层"><a href="#存储层" class="headerlink" title="存储层"></a>存储层</h3><h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2.存储引擎"></a>2.存储引擎</h2><p>存储引擎就是存储数据、建立索引、更新&#x2F;查询数据等技术的实现方式。存储引擎是基于表的，而不是基于库的，所以存储引擎可以被称为表类型</p>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 表名 &#123;<br>	...<br>&#125; engine<span class="hljs-operator">=</span>innoDB<br></code></pre></td></tr></table></figure>
+<h2 id="索引的介绍-index"><a href="#索引的介绍-index" class="headerlink" title="索引的介绍(index)"></a>索引的介绍(index)</h2><p>索引是帮助MySQL<strong>高效获取数</strong>的<code>数据结构(有序)</code></p>
+<h3 id="索引的优缺点"><a href="#索引的优缺点" class="headerlink" title="索引的优缺点"></a>索引的优缺点</h3><img src="https://pic.leetcode.cn/1678972542-NFPcGU-image-20230312211403026.png" srcset="/img/loading.gif" lazyload style="zoom:70%;"/>
 
-<h3 id="innoDB"><a href="#innoDB" class="headerlink" title="innoDB"></a>innoDB</h3><p>innoDB兼顾高可靠和高性能</p>
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
-<li>DML操作CRUD，遵循ACID，支持事务</li>
-<li>行级锁，提高并发访问性能</li>
-<li>支持外键</li>
+<h2 id="索引的结构"><a href="#索引的结构" class="headerlink" title="索引的结构"></a>索引的结构</h2><ul>
+<li>B+Tree索引，最常见的索引类型，大部分引擎都支持B+书索引</li>
+<li>Hash索引，底层是哈希表，只能精确匹配不支持范围查询</li>
+<li>R-tree（空间索引），很少用</li>
+<li>Full-text（全文索引），很少用</li>
 </ul>
-<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>他很特殊，数据存放在内存中，一旦断电数据就会消失不见，因此这些表只能作为临时表或缓存使用</p>
-<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
-<li>内存存放</li>
-<li>hash索引</li>
-</ul>
-<img src="https://pic.leetcode.cn/1678972534-WXnePu-image-20230312205207882.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
+<p>索引支持</p>
+<img src="https://pic.leetcode.cn/1678972546-gXoTeY-image-20230313102115108.png" srcset="/img/loading.gif" lazyload alt="image-20230313102115108" style="zoom:70%;" />
 
-<h3 id="存储引擎的选择"><a href="#存储引擎的选择" class="headerlink" title="存储引擎的选择"></a>存储引擎的选择</h3><img src="https://pic.leetcode.cn/1678972538-IdEpvH-image-20230312205604341.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
+<ul>
+<li><h3 id="B-Tree（多路平衡查找树）"><a href="#B-Tree（多路平衡查找树）" class="headerlink" title="B-Tree（多路平衡查找树）"></a>B-Tree（多路平衡查找树）</h3></li>
+<li><h3 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B+Tree"></a>B+Tree</h3></li>
+</ul>
+<blockquote>
+<p>所有的数据都会出现在叶子节点，叶子节点形成一个单向链表，其树形结构只负责索引</p>
+</blockquote>
+<p>原B+Tree</p>
+<img src="https://pic.leetcode.cn/1678972847-GlAMcP-image-20230313104227424.png" srcset="/img/loading.gif" lazyload alt="image-20230313104227424" style="zoom:70%;" />
+
+<p>MySQL种对B+Tree的优化，使链表形成一个双向循环链表</p>
+<img src="https://pic.leetcode.cn/1678972550-JHAEGS-image-20230313104418596.png" srcset="/img/loading.gif" lazyload alt="image-20230313104418596" style="zoom:70%;" />
+
+<ul>
+<li><h3 id="Hash索引"><a href="#Hash索引" class="headerlink" title="Hash索引"></a>Hash索引</h3></li>
+</ul>
+<img src="https://pic.leetcode.cn/1678972553-uKszpw-image-20230313104950790.png" srcset="/img/loading.gif" lazyload alt="image-20230313104950790" style="zoom:80%;" />
+
+<p>特点</p>
+<ul>
+<li>Hash索引只能用于等值查询，不支持范围查询</li>
+<li>无法利用索引完成排序操作</li>
+<li>效率高，比B+Tree树效率高</li>
+</ul>
+<p>在MySQL中，只有Memory引擎支持Hash索引，但是在InnoDB中有自适应hash功能，根据B+Tree索引自动构建的</p>
+<h2 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h2><h3 id="1-聚集索引"><a href="#1-聚集索引" class="headerlink" title="1.聚集索引"></a>1.聚集索引</h3><p><strong>必须有，而且只能有一个</strong></p>
+<blockquote>
+<p>将数据存储与索引放到了一块，索引结构的叶子节点保存了行数据</p>
+</blockquote>
+<p>选取规则：</p>
+<p>​	1.有主键，主键索引就是聚集索引</p>
+<p>​	2.没有主键，使用第一个唯一(UNIQUE)索引作为聚集索引</p>
+<p>​	3.都没有，则InnoDB会自动生成一个rowid作为隐藏的聚集索引</p>
+<h3 id="2-二级索引"><a href="#2-二级索引" class="headerlink" title="2.二级索引"></a>2.二级索引</h3><p><strong>可以存在多个</strong></p>
+<blockquote>
+<p>把数据与索引分开存储，索引结构的叶子节点关联的使对应的之后护肩</p>
+</blockquote>
+<h2 id="索引的语法"><a href="#索引的语法" class="headerlink" title="索引的语法"></a>索引的语法</h2><h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> [<span class="hljs-keyword">unique</span> <span class="hljs-operator">|</span> fulltext] index index_name <span class="hljs-keyword">on</span> table_name_ (index_col_name)<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> index <span class="hljs-keyword">from</span> table_name_<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> index index_name <span class="hljs-keyword">on</span> table_name_<br></code></pre></td></tr></table></figure>
+
+<h2 id="索引性能"><a href="#索引性能" class="headerlink" title="索引性能"></a>索引性能</h2><h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><h4 id="查看执行频次"><a href="#查看执行频次" class="headerlink" title="查看执行频次"></a>查看执行频次</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GLOBAL</span> STATUS <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;Com_______&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h4><h4 id="show-profiles查看sql语句消耗时间"><a href="#show-profiles查看sql语句消耗时间" class="headerlink" title="show profiles查看sql语句消耗时间"></a>show profiles查看sql语句消耗时间</h4><p>查看是否支持profiling</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> @<span class="hljs-variable">@have</span>_profiling;<br></code></pre></td></tr></table></figure>
+
+<p>开启profiling</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">set</span> profiling<span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<p>查看sql消耗时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">-</span>查看每条<span class="hljs-keyword">sql</span>的耗时情况<br><span class="hljs-keyword">show</span> profiles;<br><br><span class="hljs-operator">-</span>查看指定query_id的<span class="hljs-keyword">sql</span>语句的各个阶段的耗时情况<br><span class="hljs-keyword">show</span> profile <span class="hljs-keyword">for</span> query query_id;<br><br><span class="hljs-operator">-</span>查看指定query_id的<span class="hljs-keyword">sql</span>语句的CPU使用情况<br><span class="hljs-keyword">show</span> profile cpu query query_id;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="explan查看sql语句的详细信息"><a href="#explan查看sql语句的详细信息" class="headerlink" title="explan查看sql语句的详细信息"></a>explan查看sql语句的详细信息</h4><h2 id="索引的使用规则"><a href="#索引的使用规则" class="headerlink" title="索引的使用规则"></a>索引的使用规则</h2><h3 id="1-最左前缀法则"><a href="#1-最左前缀法则" class="headerlink" title="1.最左前缀法则"></a>1.最左前缀法则</h3><blockquote>
+<p>如果索引使用了多列（联合索引），要遵守最左前缀法则</p>
+<p>查询从索引的最左列开始，中间不能跳跃某列，如果跳跃某一列，索引将部分失效（后面字段大的呃索引失效）<strong>和where中条件的顺序无关</strong></p>
+</blockquote>
+<h3 id="2-范围查询"><a href="#2-范围查询" class="headerlink" title="2.范围查询"></a>2.范围查询</h3><blockquote>
+<p>联合查询中，使用了（&gt;, &lt;）则之后列的索引失效（&gt;&#x3D;, &lt;&#x3D;不失效）</p>
+</blockquote>
+<h3 id="3-索引列运算"><a href="#3-索引列运算" class="headerlink" title="3.索引列运算"></a>3.索引列运算</h3><blockquote>
+<p>不要再索引列上进行运算操作，索引将失效</p>
+</blockquote>
+<h3 id="4-字符传不加引号"><a href="#4-字符传不加引号" class="headerlink" title="4.字符传不加引号"></a>4.字符传不加引号</h3><blockquote>
+<p>字符传类型字段使用使，不加引号，索引会失效</p>
+</blockquote>
+<h3 id="5-模糊查询"><a href="#5-模糊查询" class="headerlink" title="5.模糊查询"></a>5.模糊查询</h3><blockquote>
+<p>如果仅仅使尾部模糊匹配，索引不会失效，如果是头部模糊匹配，索引失效</p>
+</blockquote>
+<h3 id="6-or连接的条件"><a href="#6-or连接的条件" class="headerlink" title="6.or连接的条件"></a>6.or连接的条件</h3><blockquote>
+<p>用or分割开的条件，如果前面的条件有索引，后面没有，那么涉及到大的索引都会失效（只有都有索引，索引才会生效）</p>
+</blockquote>
+<h3 id="7-数据分布影响"><a href="#7-数据分布影响" class="headerlink" title="7.数据分布影响"></a>7.数据分布影响</h3><blockquote>
+<p>如果MySQL评估使用索引比全表更慢，则不使用索引</p>
+</blockquote>
+<h3 id="8-SQL提示"><a href="#8-SQL提示" class="headerlink" title="8.SQL提示"></a>8.SQL提示</h3><blockquote>
+<p>是优化数据库的一个重要手段，就是在SQL语句中加入一些人为的提示来达到优化操作的目的</p>
+</blockquote>
+<ul>
+<li><p>use index(用哪个索引, 不一定用)</p>
+</li>
+<li><p>ignore index（不用哪个索引）</p>
+</li>
+<li><p>force index（必须使用这个索引，一定用）</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">explain <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> table_name use <span class="hljs-operator">||</span> ignore <span class="hljs-operator">||</span> force index(index_name) where...<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-覆盖索引"><a href="#9-覆盖索引" class="headerlink" title="9.覆盖索引"></a>9.覆盖索引</h3><blockquote>
+<p>尽量使用覆盖索引（查询使用了索引，并且需要返回的列，在该索引中已经全部能够全部找到），减少select*</p>
+</blockquote>
+<p>如果select之后的字段没有索引，且where条件中不包含该字段，那么就会触发回表查询，回表查询会慢</p>
+<h3 id="10-前缀索引"><a href="#10-前缀索引" class="headerlink" title="10.前缀索引"></a>10.前缀索引</h3><blockquote>
+<p>当字段类型为字符串（varchar，text等）时，有时候需要索引很大的字符串，这会让索引变得很大，查询时，浪费磁盘I&#x2F;O,影响查询效率。这时值将字符串一部分前缀建立索引，大大节约索引空间，提高索引效率</p>
+</blockquote>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> index idx_××× <span class="hljs-keyword">on</span> table_name(cloumn(n));<br></code></pre></td></tr></table></figure>
+
+<h4 id="最长前缀匹配"><a href="#最长前缀匹配" class="headerlink" title="最长前缀匹配"></a>最长前缀匹配</h4><p>所有重复的值与总数的比值，最好是1，此时索引性能是最好的</p>
+<h3 id="11-单列索引和联合索引"><a href="#11-单列索引和联合索引" class="headerlink" title="11.单列索引和联合索引"></a>11.单列索引和联合索引</h3><p>单列索引：一个索引只包含单个列</p>
+<p>联合索引：一个索引包含了多个列</p>
+<p>在业务场景中，如果存在多个查询条件，考虑针对查询字段建立索引，推荐联合索引（不用回表查询，速度快）</p>
+<h2 id="索引设计原则"><a href="#索引设计原则" class="headerlink" title="索引设计原则"></a>索引设计原则</h2><p><img src="https://pic.leetcode.cn/1678972980-aPKjQH-image-20230316210549569.png" srcset="/img/loading.gif" lazyload alt="image-20230316210549569"></p>
+<p>1.数据超过100万</p>
+
                 
               </div>
             
@@ -345,8 +451,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>存储引擎</div>
-      <div>http://example.com/2023/03/16/MySQL存储引擎/</div>
+      <div>索引</div>
+      <div>http://example.com/2023/03/16/MySQL/索引/</div>
     </div>
     <div class="license-meta">
       
@@ -390,9 +496,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/16/%E7%B4%A2%E5%BC%95/" title="索引">
+                      <a href="/2023/03/17/MySQL/SQL%E4%BC%98%E5%8C%96/" title="SQL优化">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">索引</span>
+                        <span class="hidden-mobile">SQL优化</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -400,8 +506,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/15/%E5%9B%BE%E8%AE%BA/" title="图论">
-                        <span class="hidden-mobile">图论</span>
+                      <a href="/2023/03/16/MySQL/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="存储引擎">
+                        <span class="hidden-mobile">存储引擎</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

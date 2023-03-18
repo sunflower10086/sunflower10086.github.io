@@ -16,22 +16,24 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="图论中常用到的算法">
+    <meta name="description" content="Go在使用时的一些小技巧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图论">
-<meta property="og:url" content="http://example.com/2023/03/15/%E5%9B%BE%E8%AE%BA/index.html">
+<meta property="og:title" content="Go使用小技巧">
+<meta property="og:url" content="http://example.com/2023/03/17/Go/Go%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="图论中常用到的算法">
+<meta property="og:description" content="Go在使用时的一些小技巧">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-15T01:44:21.710Z">
-<meta property="article:modified_time" content="2023-03-18T00:52:24.333Z">
+<meta property="og:image" content="http://example.com/images/image-20230316112726283.png">
+<meta property="article:published_time" content="2023-03-17T08:41:57.049Z">
+<meta property="article:modified_time" content="2023-03-18T08:17:32.744Z">
 <meta property="article:author" content="sunflower">
-<meta property="article:tag" content="算法">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/image-20230316112726283.png">
   
   
   
-  <title>图论 - sunflower</title>
+  <title>Go使用小技巧 - sunflower</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="图论"></span>
+            <span id="subtitle" data-typed-text="Go使用小技巧"></span>
           
         </div>
 
@@ -208,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-15 09:44" pubdate>
-          2023年3月15日 上午
+        <time datetime="2023-03-17 16:41" pubdate>
+          2023年3月17日 下午
         </time>
       </span>
     
@@ -220,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          92 字
+          180 字
         
       </span>
     
@@ -231,7 +233,7 @@
         
         
         
-          1 分钟
+          2 分钟
         
       </span>
     
@@ -269,15 +271,18 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">图论</h1>
+            <h1 style="display: none">Go使用小技巧</h1>
             
             
               <div class="markdown-body">
                 
-                <p>图论中常用到的算法</p>
+                <p>Go在使用时的一些小技巧</p>
 <span id="more"></span>
 
-<h2 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h2><h2 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h2><h2 id="树与图的深度优先遍历"><a href="#树与图的深度优先遍历" class="headerlink" title="树与图的深度优先遍历"></a>树与图的深度优先遍历</h2><h2 id="树与图的广度优先遍历"><a href="#树与图的广度优先遍历" class="headerlink" title="树与图的广度优先遍历"></a>树与图的广度优先遍历</h2><h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><h2 id="Disjktra"><a href="#Disjktra" class="headerlink" title="Disjktra"></a>Disjktra</h2><h2 id="bellman-ford"><a href="#bellman-ford" class="headerlink" title="bellman-ford"></a>bellman-ford</h2><h2 id="spfa"><a href="#spfa" class="headerlink" title="spfa"></a>spfa</h2><h2 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h2><h2 id="Prim"><a href="#Prim" class="headerlink" title="Prim"></a>Prim</h2><h2 id="Kruskal"><a href="#Kruskal" class="headerlink" title="Kruskal"></a>Kruskal</h2><h2 id="染色法判定二分图"><a href="#染色法判定二分图" class="headerlink" title="染色法判定二分图"></a>染色法判定二分图</h2><h2 id="匈牙利算法"><a href="#匈牙利算法" class="headerlink" title="匈牙利算法"></a>匈牙利算法</h2>
+<h2 id="1-闭包调试"><a href="#1-闭包调试" class="headerlink" title="1.闭包调试"></a>1.闭包调试</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">where := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    _, file, line, _ := runtime.Caller(<span class="hljs-number">1</span>)<br>    log.Printf(<span class="hljs-string">&quot;%s:%d&quot;</span>, file, line)<br>&#125;<br><br>where()<br>num := <span class="hljs-number">10</span><br><span class="hljs-comment">// some code</span><br>f := fib()<br><span class="hljs-comment">// some more code</span><br>where()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./../../images/image-20230316112726283.png" srcset="/img/loading.gif" lazyload alt="image-20230316112726283"></p>
+
                 
               </div>
             
@@ -295,7 +300,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  <a href="/categories/Go/" class="category-chain-item">Go</a>
   
   
 
@@ -310,7 +315,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+        <a href="/tags/Go/">#Go</a>
       
     </div>
   
@@ -322,8 +327,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>图论</div>
-      <div>http://example.com/2023/03/15/图论/</div>
+      <div>Go使用小技巧</div>
+      <div>http://example.com/2023/03/17/Go/Go使用小技巧/</div>
     </div>
     <div class="license-meta">
       
@@ -335,7 +340,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月15日</div>
+          <div>2023年3月17日</div>
         </div>
       
       
@@ -367,9 +372,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/16/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="存储引擎">
+                      <a href="/2023/03/17/Go/Go%E8%AF%AD%E6%B3%95/" title="Go基础语法">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">存储引擎</span>
+                        <span class="hidden-mobile">Go基础语法</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -377,8 +382,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
-                        <span class="hidden-mobile">数据结构</span>
+                      <a href="/2023/03/17/MySQL/SQL%E4%BC%98%E5%8C%96/" title="SQL优化">
+                        <span class="hidden-mobile">SQL优化</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

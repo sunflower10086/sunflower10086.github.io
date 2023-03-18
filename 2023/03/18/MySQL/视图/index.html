@@ -19,7 +19,7 @@
     <meta name="description" content="视图的介绍和基本用法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="视图">
-<meta property="og:url" content="http://example.com/2023/03/18/%E8%A7%86%E5%9B%BE/index.html">
+<meta property="og:url" content="http://example.com/2023/03/18/MySQL/%E8%A7%86%E5%9B%BE/index.html">
 <meta property="og:site_name" content="sunflower">
 <meta property="og:description" content="视图的介绍和基本用法">
 <meta property="og:locale" content="zh_CN">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png">
 <meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png">
 <meta property="article:published_time" content="2023-03-18T01:25:11.000Z">
-<meta property="article:modified_time" content="2023-03-18T02:59:04.006Z">
+<meta property="article:modified_time" content="2023-03-18T08:18:54.797Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
@@ -304,13 +304,13 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span>;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br>都可以成功插入<br>但是查询的时候看不见job这条数据<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
 
 <p>视图中的数据</p>
-<p><img src="/./../images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
+<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
 <p>数据库中的数据(id不一样是因为我设置的id自增，在做测试的时候插入又删除了几条数据)</p>
-<p><img src="/./../images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
+<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
 <p>如果创建视图的时候加上检查选项选项，那么不满足条件的插入会报错，不让插入</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CASCADED</span> <span class="hljs-keyword">CHECK</span> OPTION;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
 
-<p><img src="/./../images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
+<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
 <h3 id="基于视图创建视图"><a href="#基于视图创建视图" class="headerlink" title="基于视图创建视图"></a>基于视图创建视图</h3><h4 id="cascaded"><a href="#cascaded" class="headerlink" title="cascaded"></a>cascaded</h4><ul>
 <li>两个视图都没有检查选项(随便插入，没有限制)</li>
 <li>新视图有限制，老视图没有限制</li>
@@ -331,7 +331,7 @@
 <h4 id="local"><a href="#local" class="headerlink" title="local"></a>local</h4><p class="note note-info">与cascaded基本相同，有一点本质的区别，local只会限制本视图，不会递归的给父视图加上限制条件</p>
 
 <h2 id="视图的更新"><a href="#视图的更新" class="headerlink" title="视图的更新"></a>视图的更新</h2><p>只有当视图中的行与基础表中的行一一对应的时候我们才能更新，只要包含下面任何一项都不能更新</p>
-<p><img src="/./../images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
+<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> user_count_view <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> user_count_view <span class="hljs-keyword">values</span>(<span class="hljs-number">10</span>); # 此时会报错<br></code></pre></td></tr></table></figure>
 
 
@@ -380,7 +380,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>视图</div>
-      <div>http://example.com/2023/03/18/视图/</div>
+      <div>http://example.com/2023/03/18/MySQL/视图/</div>
     </div>
     <div class="license-meta">
       
@@ -424,11 +424,17 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/03/18/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" title="存储过程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">存储过程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/17/Go%E8%AF%AD%E6%B3%95/" title="Go基础语法">
+                      <a href="/2023/03/17/Go/Go%E8%AF%AD%E6%B3%95/" title="Go基础语法">
                         <span class="hidden-mobile">Go基础语法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>

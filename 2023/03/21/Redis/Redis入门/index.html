@@ -16,22 +16,29 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="从Go的进阶语法开始讲起">
+    <meta name="description" content="Redis入门的一些知识">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go进阶语法">
-<meta property="og:url" content="http://example.com/2023/03/19/Go/Go%E8%BF%9B%E9%98%B6%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:title" content="Redis入门">
+<meta property="og:url" content="http://example.com/2023/03/21/Redis/Redis%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="从Go的进阶语法开始讲起">
+<meta property="og:description" content="Redis入门的一些知识">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-19T06:16:45.838Z">
-<meta property="article:modified_time" content="2023-03-19T08:45:43.375Z">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321205142611.png">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321205859087.png">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321210055778.png">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321210750478.png">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321210905775.png">
+<meta property="og:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321211004985.png">
+<meta property="article:published_time" content="2023-03-21T08:34:21.871Z">
+<meta property="article:modified_time" content="2023-03-21T13:15:34.568Z">
 <meta property="article:author" content="sunflower">
-<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/Redis%E5%85%A5%E9%97%A8/image-20230321205142611.png">
   
   
   
-  <title>Go进阶语法 - sunflower</title>
+  <title>Redis入门 - sunflower</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go进阶语法"></span>
+            <span id="subtitle" data-typed-text="Redis入门"></span>
           
         </div>
 
@@ -208,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-19 14:16" pubdate>
-          2023年3月19日 下午
+        <time datetime="2023-03-21 16:34" pubdate>
+          2023年3月21日 下午
         </time>
       </span>
     
@@ -220,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.6k 字
         
       </span>
     
@@ -231,7 +238,7 @@
         
         
         
-          13 分钟
+          14 分钟
         
       </span>
     
@@ -269,40 +276,126 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go进阶语法</h1>
+            <h1 style="display: none">Redis入门</h1>
             
             
               <div class="markdown-body">
                 
-                <p>从Go的进阶语法开始讲起</p>
+                <p>Redis入门的一些知识</p>
 <span id="more"></span>
 
-<h2 id="1-结构体"><a href="#1-结构体" class="headerlink" title="1.结构体"></a>1.结构体</h2><p>结构体和c++的结构体相同</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> name <span class="hljs-keyword">struct</span> &#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="1-认识NoSQL"><a href="#1-认识NoSQL" class="headerlink" title="1.认识NoSQL"></a>1.认识NoSQL</h2><h3 id="SQL和NoSQL的对比"><a href="#SQL和NoSQL的对比" class="headerlink" title="SQL和NoSQL的对比"></a>SQL和NoSQL的对比</h3><table>
+<thead>
+<tr>
+<th></th>
+<th align="center">SQL</th>
+<th align="center">NoSQL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据结构</td>
+<td align="center">结构化</td>
+<td align="center">非结构化（1.key&#x2F;value(Redis)  2.文档类型(MongoDB)）</td>
+</tr>
+<tr>
+<td>数据关联</td>
+<td align="center">关联的(外键，维护关系)</td>
+<td align="center">无关联的</td>
+</tr>
+<tr>
+<td>查询方式</td>
+<td align="center">SQL查询(SQL语句)</td>
+<td align="center">非SQL(Redis:get user: 1)</td>
+</tr>
+<tr>
+<td>事务特性</td>
+<td align="center">事务(ACID原则)</td>
+<td align="center">不支持事务</td>
+</tr>
+<tr>
+<td>存储方式</td>
+<td align="center">磁盘</td>
+<td align="center">内存</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td align="center">垂直</td>
+<td align="center">水平</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td align="center">1.数据结构固定   2.相关业务对数据安全性、一致性要求较高</td>
+<td align="center">1.数据结构不稳定    2.对一致性、安全性要求不高    3。对性能要求较高</td>
+</tr>
+</tbody></table>
+<h2 id="2-认识Redis"><a href="#2-认识Redis" class="headerlink" title="2.认识Redis"></a>2.认识Redis</h2><h3 id="2-1-特征"><a href="#2-1-特征" class="headerlink" title="2.1 特征"></a>2.1 特征</h3><ul>
+<li>key&#x2F;value（value支持多种不同的数据结构）</li>
+<li>单线程，每个命令具备原子性，不具备并发风险</li>
+<li>低延迟、速度快（基于内存，IO多路复用，良好的编码）</li>
+<li>支持数据持久化</li>
+<li>支持主从集群，分片集群</li>
+<li>支持多语言客户端</li>
+</ul>
+<h2 id="3-安装Redis"><a href="#3-安装Redis" class="headerlink" title="3. 安装Redis"></a>3. 安装Redis</h2><p class="note note-warning">在Linux下安装</p>
 
-<p>结构体可以使用&#x3D;&#x3D;和!&#x3D;去比较</p>
-<h3 id="1-1-结构体嵌入和匿名成员"><a href="#1-1-结构体嵌入和匿名成员" class="headerlink" title="1.1 结构体嵌入和匿名成员"></a>1.1 结构体嵌入和匿名成员</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">type</span> Point <span class="hljs-keyword">struct</span> &#123;<br>    X, Y <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Circle <span class="hljs-keyword">struct</span> &#123;<br>    Center Point<br>    Radius <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Wheel <span class="hljs-keyword">struct</span> &#123;<br>    Circle Circle<br>    Spokes <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-1-在Ubuntu中直接安装"><a href="#3-1-在Ubuntu中直接安装" class="headerlink" title="3.1 在Ubuntu中直接安装"></a>3.1 在Ubuntu中直接安装</h3><p class="note note-warning">直接安装无法设置后台运行，还是建议自己手动安装</p>
 
-<p>这样虽然声明变得方便但是使用十分的麻烦</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">var</span> w Wheel<br>w.Circle.Center.X = <span class="hljs-number">8</span><br>w.Circle.Center.Y = <span class="hljs-number">8</span><br>w.Circle.Radius = <span class="hljs-number">5</span><br>w.Spokes = <span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+<p>版本比较低应该是5版本的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update<br>sudo apt-get install redis<br></code></pre></td></tr></table></figure>
 
-<p>因此衍生出来另一个特性匿名成员</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">type</span> Circle <span class="hljs-keyword">struct</span> &#123;<br>    Point<br>    Radius <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Wheel <span class="hljs-keyword">struct</span> &#123;<br>    Circle<br>    Spokes <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-2官网下载"><a href="#3-2官网下载" class="headerlink" title="3.2官网下载"></a>3.2官网下载</h3><p>首先下载redis的安装包，可以去<a target="_blank" rel="noopener" href="https://redis.io/download/">官网</a>下载</p>
+<p>在官网下载完成之后我们把安装包移动到<code>/usr/local/src下</code></p>
+<p>然后解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar -zxvf redis×××××(你的安装包的名字)<br></code></pre></td></tr></table></figure>
 
-<p>这种方法可以直接访问</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">type</span> Circle <span class="hljs-keyword">struct</span> &#123;<br>    Point<br>    Radius <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Wheel <span class="hljs-keyword">struct</span> &#123;<br>    Circle<br>    Spokes <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后我们要下载gcc，因为redis是基于c++开发的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install gcc<br></code></pre></td></tr></table></figure>
 
-<p>但是我们如果直接初始化整个结构体编译不能通过</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Go">w = Wheel&#123;<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, <span class="hljs-number">5</span>, <span class="hljs-number">20</span>&#125;                       <span class="hljs-comment">// compile error: unknown fields</span><br>w = Wheel&#123;X: <span class="hljs-number">8</span>, Y: <span class="hljs-number">8</span>, Radius: <span class="hljs-number">5</span>, Spokes: <span class="hljs-number">20</span>&#125; <span class="hljs-comment">// compile error: unknown fields</span><br></code></pre></td></tr></table></figure>
+<p>安装完成之后进入<code>/usr/local/src</code>下载安装redis</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/src/redis<br><br>make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
 
-<p>因此我们要使用这种语法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Go">w = Wheel&#123;Circle&#123;Point&#123;<span class="hljs-number">8</span>, <span class="hljs-number">8</span>&#125;, <span class="hljs-number">5</span>&#125;, <span class="hljs-number">20</span>&#125;<br><br>w = Wheel&#123;<br>    Circle: Circle&#123;<br>        Point:  Point&#123;X: <span class="hljs-number">8</span>, Y: <span class="hljs-number">8</span>&#125;,<br>        Radius: <span class="hljs-number">5</span>,<br>    &#125;,<br>    Spokes: <span class="hljs-number">20</span>, <span class="hljs-comment">// <span class="hljs-doctag">NOTE:</span> trailing comma necessary here (and at Radius)</span><br>&#125;<br><br>fmt.Printf(<span class="hljs-string">&quot;%#v\n&quot;</span>, w)<br><span class="hljs-comment">// Output:</span><br><span class="hljs-comment">// Wheel&#123;Circle:Circle&#123;Point:Point&#123;X:8, Y:8&#125;, Radius:5&#125;, Spokes:20&#125;</span><br><br>w.X = <span class="hljs-number">42</span><br><br>fmt.Printf(<span class="hljs-string">&quot;%#v\n&quot;</span>, w)<br><span class="hljs-comment">// Output:</span><br><span class="hljs-comment">// Wheel&#123;Circle:Circle&#123;Point:Point&#123;X:42, Y:8&#125;, Radius:5&#125;, Spokes:20&#125;</span><br></code></pre></td></tr></table></figure>
+<p>如果出现这个错误，我们可以执行这个命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">/bin/sh: 1: pkg-config: not found<br><br>sudo apt-get install pkg-config<br></code></pre></td></tr></table></figure>
 
-<h3 id="1-2-使用工厂方式创建结构体"><a href="#1-2-使用工厂方式创建结构体" class="headerlink" title="1.2 使用工厂方式创建结构体"></a>1.2 使用工厂方式创建结构体</h3><p>使用New的方法去创建</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">type</span> pair <span class="hljs-keyword">struct</span> &#123;<br>	x, y <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewPair</span><span class="hljs-params">(x, y <span class="hljs-type">int</span>)</span></span> *pair &#123;<br>	<span class="hljs-keyword">return</span> &amp;pair&#123;x, y&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	p := NewPair(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>此时在<code>/usr/local/bin</code>中会多这几个文件（docker那个不是）</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321205142611.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-3-设置快捷启动"><a href="#3-3-设置快捷启动" class="headerlink" title="3.3 设置快捷启动"></a>3.3 设置快捷启动</h3><p>此时直接<code>redis-server</code>会在前台打开redis，很不方便，我们设置在后台打开redis，所以我们要去修改配置文件</p>
+<p>在<code>/usr/local/src/redis</code>中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 先复制一下这个配置文件，防止我们把文件该坏</span><br><span class="hljs-built_in">cp</span> redis.conf redis.conf.bck<br><br><span class="hljs-comment"># 然后</span><br>vim redis.conf<br></code></pre></td></tr></table></figure>
 
-<p>如果想知道结构体类型 T 的一个实例占用了多少内存，可以使用：<code>size := unsafe.Sizeof(T&#123;&#125;)</code></p>
-<h4 id="如何强制使用工厂方法"><a href="#如何强制使用工厂方法" class="headerlink" title="如何强制使用工厂方法"></a>如何强制使用工厂方法</h4><p>把结构体的首字母小写，使其不可被导出，，在其他包中强制使用New方法</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-comment"># 在文件中修改这些配置</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"># 1.bind默认为127.0.0.1，只允许本机访问，改为0.0.0.0，任意ip地址都可以访问</span><br><span class="hljs-attr">bind</span> <span class="hljs-string">0.0.0.0</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">#2.守护进程，修改为yes之后可以后台运行</span><br><span class="hljs-attr">daemonize</span> <span class="hljs-string">yes</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">#3. 设置密码，设置之后访问redis必须需要密码</span><br><span class="hljs-attr">requirepass</span> <span class="hljs-string">123456</span><br></code></pre></td></tr></table></figure>
+
+<p>其他的常见配置</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321205859087.png" srcset="/img/loading.gif" lazyload></p>
+<p>配置好之后我们要设置开机自启，但是我用的是wsl，无法设置，所以我们曲线救国，写一个shell脚本</p>
+<p>在自己的家目录下，创建一个<code>redis-start.sh</code>的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">! /bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">先进到redis的目录，然后启动redis，同时指定配置文件</span><br>cd /usr/local/src/redis &amp;&amp; sudo redis-server redis.conf<br></code></pre></td></tr></table></figure>
+
+<p>我们启动redis时只需要运行这个shell脚本就行</p>
+<p>此时用top也可以查看到进程</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210055778.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-使用redis-cli访问redis"><a href="#4-使用redis-cli访问redis" class="headerlink" title="4.使用redis-cli访问redis"></a>4.使用redis-cli访问redis</h2><p>直接执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">redis-cli [options] [commonds]<br></code></pre></td></tr></table></figure>
+
+<p>常见的options</p>
+<ul>
+<li>-h 127.0.0.1 指定要连接redis的IP地址，默认是127.0.0.1</li>
+<li>-p 6379 访问的redis的端口号，默认是6379</li>
+<li>-a 123456 设置的密码，但是redis不建议这样使用密码，说不安全(也可以，自己一个人使用的话无所谓)</li>
+</ul>
+<p>commonds是命令（不常用）</p>
+<ul>
+<li>比如ping</li>
+</ul>
+<p>我们登录不指定密码，使用命令会报这样的错</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210750478.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们只需要输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">auth 123456<br></code></pre></td></tr></table></figure>
+
+<p>例如，不区分大小写，出现ok说明登录成功</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210905775.png" srcset="/img/loading.gif" lazyload></p>
+<p>此时我们再ping，就会返回pong</p>
+<p><img src="/./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321211004985.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -321,7 +414,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Go/" class="category-chain-item">Go</a>
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
   
   
 
@@ -336,7 +429,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Go/">#Go</a>
+        <a href="/tags/Redis/">#Redis</a>
       
     </div>
   
@@ -348,8 +441,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go进阶语法</div>
-      <div>http://example.com/2023/03/19/Go/Go进阶语法/</div>
+      <div>Redis入门</div>
+      <div>http://example.com/2023/03/21/Redis/Redis入门/</div>
     </div>
     <div class="license-meta">
       
@@ -361,7 +454,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月19日</div>
+          <div>2023年3月21日</div>
         </div>
       
       
@@ -393,18 +486,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/21/Redis/Redis%E5%85%A5%E9%97%A8/" title="Redis入门">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis入门</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/18/MySQL/MySQL%E9%94%81/" title="MySQL锁">
-                        <span class="hidden-mobile">MySQL锁</span>
+                      <a href="/2023/03/19/Go/Go%E8%BF%9B%E9%98%B6%E8%AF%AD%E6%B3%95/" title="Go进阶语法">
+                        <span class="hidden-mobile">Go进阶语法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

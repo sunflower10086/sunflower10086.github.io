@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Redis基础</title>
+    <link href="/2023/03/22/Redis/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/"/>
+    <url>/2023/03/22/Redis/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<p>Redis的一些基础数据类型和使用方法</p><span id="more"></span><h2 id="1-Redis数据结构介绍"><a href="#1-Redis数据结构介绍" class="headerlink" title="1.Redis数据结构介绍"></a>1.Redis数据结构介绍</h2><p>keys一般都是String，keys的类型十分丰富</p><table><thead><tr><th align="center">value</th><th align="center">例子</th></tr></thead><tbody><tr><td align="center">String</td><td align="center">hello world</td></tr><tr><td align="center">Hash</td><td align="center">{name: “jack”, age: 21}</td></tr><tr><td align="center">List</td><td align="center">{A -&gt; B -&gt; C -&gt; C}</td></tr><tr><td align="center">Set</td><td align="center">{A, B, C}</td></tr><tr><td align="center">SortedSet</td><td align="center">{A: 1, B: 2, C: 3}</td></tr><tr><td align="center">GEO</td><td align="center">{A: (120.3, 30.5)}</td></tr><tr><td align="center">BitMap</td><td align="center">011011011011011011</td></tr><tr><td align="center">HyperLog</td><td align="center">011011011011011011</td></tr></tbody></table><p>操作方式可以去<a href="https://redis.io/commands/">官网</a>学习，官网讲的更详细</p><h2 id="2-Redis的通用命令"><a href="#2-Redis的通用命令" class="headerlink" title="2. Redis的通用命令"></a>2. Redis的通用命令</h2><h3 id="1-keys"><a href="#1-keys" class="headerlink" title="1.keys"></a>1.keys</h3><p>查找key，可以有通配符<code>*, ?</code>(*表示多个，?表示一个字符)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">keys *<br></code></pre></td></tr></table></figure><p>效率太差，又因为redis是单线程的，所以不建议我们在生产环境设备上使用</p><h3 id="2-del"><a href="#2-del" class="headerlink" title="2.del"></a>2.del</h3><p>删除一个<strong>指定</strong>的key</p><h3 id="3-exists"><a href="#3-exists" class="headerlink" title="3.exists"></a>3.exists</h3><p>判断一个key是否存在，返回值是1或0</p><h3 id="4-expire（十分常用）"><a href="#4-expire（十分常用）" class="headerlink" title="4.expire（十分常用）"></a>4.expire（十分常用）</h3><p>给一个key设置有效期，到期时key会被自动删除</p><h3 id="5-TTL"><a href="#5-TTL" class="headerlink" title="5.TTL"></a>5.TTL</h3><p>查看一个key的有效期，<code>-2</code>表示已经过期，<code>-1</code>表示永不过期</p><h2 id="3-String类型"><a href="#3-String类型" class="headerlink" title="3. String类型"></a>3. String类型</h2><p>Redis中最简单的存储类型</p><p>value时字符串，根据字符串格式不同，分为三类</p><ul><li>string：普通字符串</li><li>int：整数类型，可以做自增，自减操作</li><li>float：浮点类型，可以做自增，自减操作</li></ul><p>底层都是字节数组存储，只不过编码方式不同，最大空间不超过512MB</p><h3 id="3-1-String相关命令"><a href="#3-1-String相关命令" class="headerlink" title="3.1 String相关命令"></a>3.1 String相关命令</h3><ul><li><code>set</code>：添加或修改一个已经存在的String类型的键值对，可接的参数十分多，命令行会自动提示</li><li><code>get</code>：根据key获取String类型的value</li><li><code>mset</code>：批量添加多个String类型的键值对</li><li><code>mget</code>：根据多个key获取多个String类型的value</li><li><code>incr</code>：让一个整形的key自增1<strong>返回增长后的数值</strong></li><li><code>incrby</code>：让一个整形的key自增并指定步长，比如<code>incrby age 2</code><strong>返回增长后的数值</strong></li><li><code>incrbyfloat</code>：让一个浮点类型的数字自增<strong>并指定步长</strong></li><li><code>setnx</code>：添加一个String类型的键值对，前提是这个key不存在**(失败返回0，成功返回1)**</li><li><code>setex</code>：添加一个String类型的键值对，并指定有效时间</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Redis</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Redis</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Redis入门</title>
     <link href="/2023/03/21/Redis/Redis%E5%85%A5%E9%97%A8/"/>
     <url>/2023/03/21/Redis/Redis%E5%85%A5%E9%97%A8/</url>

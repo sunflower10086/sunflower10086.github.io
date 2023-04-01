@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094612421.png">
 <meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094827113.png">
 <meta property="article:published_time" content="2023-03-27T00:43:18.995Z">
-<meta property="article:modified_time" content="2023-03-27T08:11:33.127Z">
+<meta property="article:modified_time" content="2023-03-27T08:25:18.399Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
@@ -92,7 +92,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
 
 
 <body>
@@ -230,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.1k 字
         
       </span>
     
@@ -376,8 +380,8 @@
 <p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327092654100.png" srcset="/img/loading.gif" lazyload alt="image-20230327092654100"></p>
 <p>解决方案：</p>
 <ul>
-<li>给不同的key的TTL添加随机值，随机加一到五分钟</li>
-<li>利用Redis集群提高服务的可用性</li>
+<li>给不同的key的TTL添加随机值，随机加一到五分钟（解决大量的热Key同时过期）</li>
+<li>利用Redis集群提高服务的可用性（解决Redis宕机问题）</li>
 <li>给缓存业务添加降级限流策略</li>
 <li>给业务添加多级缓存</li>
 </ul>

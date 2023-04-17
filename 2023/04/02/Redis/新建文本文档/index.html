@@ -16,32 +16,25 @@
   <meta name="author" content="sunflower">
   <meta name="keywords" content="">
   
-    <meta name="description" content="讲解Redis做缓存的方法">
+    <meta name="description" content="Redis的使用方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis做缓存">
-<meta property="og:url" content="http://example.com/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:title" content="Redis基础">
+<meta property="og:url" content="http://example.com/2023/04/02/Redis/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/index.html">
 <meta property="og:site_name" content="sunflower">
-<meta property="og:description" content="讲解Redis做缓存的方法">
+<meta property="og:description" content="Redis的使用方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327090734217.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327091118425.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327092654100.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094241975.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094436374.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094550917.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094612421.png">
-<meta property="og:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094827113.png">
-<meta property="article:published_time" content="2023-03-27T00:43:18.995Z">
-<meta property="article:modified_time" content="2023-04-02T02:44:46.338Z">
+<meta property="og:image" content="http://example.com/images/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/image-20230402104644832.png">
+<meta property="og:image" content="http://example.com/images/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/image-20230402104751389.png">
+<meta property="article:published_time" content="2023-04-02T02:44:00.961Z">
+<meta property="article:modified_time" content="2023-04-02T13:35:57.215Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png">
+<meta name="twitter:image" content="http://example.com/images/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/image-20230402104644832.png">
   
   
   
-  <title>Redis做缓存 - sunflower</title>
+  <title>Redis基础 - sunflower</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Redis做缓存"></span>
+            <span id="subtitle" data-typed-text="Redis基础"></span>
           
         </div>
 
@@ -222,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-27 08:43" pubdate>
-          2023年3月27日 早上
+        <time datetime="2023-04-02 10:44" pubdate>
+          2023年4月2日 上午
         </time>
       </span>
     
@@ -234,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.6k 字
         
       </span>
     
@@ -245,7 +238,7 @@
         
         
         
-          9 分钟
+          14 分钟
         
       </span>
     
@@ -283,125 +276,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Redis做缓存</h1>
+            <h1 style="display: none">Redis基础</h1>
             
             
               <div class="markdown-body">
                 
-                <p>讲解Redis做缓存的方法</p>
+                <p>Redis的使用方法</p>
 <span id="more"></span>
 
-<h2 id="1-缓存的更新策略"><a href="#1-缓存的更新策略" class="headerlink" title="1.缓存的更新策略"></a>1.缓存的更新策略</h2><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">内存淘汰</th>
-<th align="center">超时删除</th>
-<th align="center">主动更新</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">说明</td>
-<td align="center">不需要自己维护，利用Redis的内存淘汰机制，当内存不足时自动淘汰部分数据，下次查询时更新缓存</td>
-<td align="center">给缓存添加TTL，到期后自动删除缓存，下次查询时更新缓存</td>
-<td align="center">编写业务逻辑，再修改数据库的同时，更新缓存</td>
-</tr>
-<tr>
-<td align="center">一致性</td>
-<td align="center">差</td>
-<td align="center">一般</td>
-<td align="center">好</td>
-</tr>
-<tr>
-<td align="center">维护成本</td>
-<td align="center">无</td>
-<td align="center">低</td>
-<td align="center">高</td>
-</tr>
-</tbody></table>
-<p>业务场景：</p>
+<h2 id="全局唯一ID生成器"><a href="#全局唯一ID生成器" class="headerlink" title="全局唯一ID生成器"></a>全局唯一ID生成器</h2><p>一种在分布式系统上用来生成全局唯一ID的工具</p>
+<p>使用Redis作为全局唯一ID生成器</p>
+<p><img src="/./../../images/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/image-20230402104644832.png" srcset="/img/loading.gif" lazyload alt="image-20230402104644832"></p>
+<p>为了安全性，我们可以不直接使用Redis的递增工具，而是自己拼接一些其他的信息</p>
+<p><img src="/./../../images/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/image-20230402104751389.png" srcset="/img/loading.gif" lazyload alt="image-20230402104751389"></p>
+<p>定义一个初始时间，时间戳就是现在的时间与初始时间的差值，以秒为单位</p>
+<p>序列号秒内的计数器，里面有我们当前时间的秒数</p>
 <ul>
-<li>低一致性需求：使用内存淘汰机制。例如店铺类型的查询缓存</li>
-<li>高一致性需求：主动更新，并以超市剔除作为兜底方案。例如店铺详情查询的缓存</li>
+<li>符号位：1bit，永远为0</li>
+<li>时间戳：31bit，以秒为单位，可以使用69年</li>
+<li>序列号：32bit：秒内的计数器，支持每秒生成<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2 ^ {32} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>个不同的ID</li>
 </ul>
-<h3 id="主动更新策略"><a href="#主动更新策略" class="headerlink" title="主动更新策略"></a>主动更新策略</h3><p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png" srcset="/img/loading.gif" lazyload alt="image-20230327085149035"></p>
-<p>一般使用第一种，需要我们自己编码</p>
-<h4 id="主动更新策略需要考虑三个问题"><a href="#主动更新策略需要考虑三个问题" class="headerlink" title="主动更新策略需要考虑三个问题"></a>主动更新策略需要考虑三个问题</h4><p>1.删除缓存还是更新缓存</p>
-<ul>
-<li>更新缓存：每次操作数据库都更新缓存，无效的写操作比较多</li>
-<li>删除缓存：更新数据时缓存失效，查询时在写入缓存</li>
-</ul>
-<p>2.如何保证缓存与数据库的操作同时成功或失败</p>
-<ul>
-<li>单机：写在一个事务里</li>
-<li>分布式：利用TCC等分布式事务方案</li>
-</ul>
-<p>3.先操作缓存还是先操作数据库</p>
-<ul>
-<li>先删除缓存，再操作数据库</li>
-<li>先操作数据库，在删除缓存（保证原子性，利用事务）</li>
-</ul>
-<p>两种方式都可能出现异常情况，但是先操作数据库再删缓存出现异常的概率较小</p>
-<h4 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h4><ul>
-<li>缓存未命中直接返回</li>
-<li>缓存未命中则查询数据库，并写入缓存，并设置超时时间</li>
-</ul>
-<h4 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h4><ul>
-<li>先操作数据库，在删除缓存</li>
-<li>保证数据库与缓存操作的原子性</li>
-</ul>
-<h2 id="2-缓存穿透"><a href="#2-缓存穿透" class="headerlink" title="2.缓存穿透"></a>2.缓存穿透</h2><p>指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会直接打到数据库</p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327090734217.png" srcset="/img/loading.gif" lazyload alt="image-20230327090734217"></p>
-<p>常见的两种解决方案：</p>
-<ul>
-<li>缓存空对象：把空的值缓存到Redis<ul>
-<li>优点：实现简单，维护方便</li>
-<li>缺点：<ul>
-<li>额外的内存消耗（设置一个TTL，过一段时间删除）</li>
-<li>可能造成短期的不一致</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327091118425.png" srcset="/img/loading.gif" lazyload alt="image-20230327091118425"></p>
-<ul>
-<li>布隆过滤：一种算法（目前不了解）<ul>
-<li>优点：内存占用少，没有多余key</li>
-<li>缺点：<ul>
-<li>实现复杂</li>
-<li>存在误判可能</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3.缓存雪崩"></a>3.缓存雪崩</h2><p>在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来压力</p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327092654100.png" srcset="/img/loading.gif" lazyload alt="image-20230327092654100"></p>
-<p>解决方案：</p>
-<ul>
-<li>给不同的key的TTL添加随机值，随机加一到五分钟（解决大量的热Key同时过期）</li>
-<li>利用Redis集群提高服务的可用性（解决Redis宕机问题）</li>
-<li>给缓存业务添加降级限流策略</li>
-<li>给业务添加多级缓存</li>
-</ul>
-<h2 id="4-缓存击穿"><a href="#4-缓存击穿" class="headerlink" title="4.缓存击穿"></a>4.缓存击穿</h2><p>也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且缓存<strong>重建业务比较复杂</strong>的Key突然失效了，无数的请求访问会在一瞬间给数据库带来巨大的冲击</p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094241975.png" srcset="/img/loading.gif" lazyload alt="image-20230327094241975"></p>
-<p>当有n个线程在重建的时候，我们的服务器就会有极大的压力，服务就撑不住</p>
-<p>两种解决方案：</p>
-<ul>
-<li>互斥锁</li>
-<li>逻辑过期</li>
-</ul>
-<h3 id="4-1-互斥锁"><a href="#4-1-互斥锁" class="headerlink" title="4.1 互斥锁"></a>4.1 互斥锁</h3><p>只有获取互斥锁的线程才可以重建缓存数据</p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094436374.png" srcset="/img/loading.gif" lazyload alt="image-20230327094436374"></p>
-<h3 id="4-2-逻辑过期"><a href="#4-2-逻辑过期" class="headerlink" title="4.2 逻辑过期"></a>4.2 逻辑过期</h3><p>在这个热Key的value中添加一个逻辑过期时间，而他的TTL是永不过期</p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094550917.png" srcset="/img/loading.gif" lazyload alt="image-20230327094550917"></p>
-<p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094612421.png" srcset="/img/loading.gif" lazyload alt="image-20230327094612421"></p>
-<h3 id="4-3-两种方式对比"><a href="#4-3-两种方式对比" class="headerlink" title="4.3 两种方式对比"></a>4.3 两种方式对比</h3><p><img src="/./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094827113.png" srcset="/img/loading.gif" lazyload alt="image-20230327094827113"></p>
-<p>两种方法需要根据自己的业务需求去选择，</p>
-<p>在可用性和一致性之间做出选择</p>
-<h2 id="5-缓存封装工具"><a href="#5-缓存封装工具" class="headerlink" title="5.缓存封装工具"></a>5.缓存封装工具</h2>
+<h3 id="Go实现"><a href="#Go实现" class="headerlink" title="Go实现"></a>Go实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;github.com/redis/go-redis/v9&quot;</span><br>	<span class="hljs-string">&quot;sync&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>	<span class="hljs-comment">// BeginTimeStamp 初始的时间戳</span><br>	BeginTimeStamp = <span class="hljs-type">int64</span>(<span class="hljs-number">1640966400</span>)<br>)<br><br><span class="hljs-keyword">var</span> RDB *redis.Client<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	rdb := redis.NewClient(&amp;redis.Options&#123;<br>		Addr:     <span class="hljs-string">&quot;localhost:6379&quot;</span>,<br>		Password: <span class="hljs-string">&quot;123456&quot;</span>, <span class="hljs-comment">// 没有密码，默认值</span><br>		DB:       <span class="hljs-number">0</span>,        <span class="hljs-comment">// 默认DB 0</span><br>	&#125;)<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(rdb *redis.Client)</span></span> &#123;<br>		err := rdb.Close()<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			fmt.Println(err)<br>		&#125;<br>	&#125;(rdb)<br><br>	RDB = rdb<br><br>	ctx := context.Background()<br>	NextId(ctx, <span class="hljs-string">&quot;order&quot;</span>)<br><br>	group := sync.WaitGroup&#123;&#125;<br><br>    group.Add(<span class="hljs-number">10</span>)<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>			<span class="hljs-keyword">defer</span> group.Done()<br>			id := NextId(ctx, <span class="hljs-string">&quot;order&quot;</span>)<br>			fmt.Println(id)<br>		&#125;()<br>	&#125;<br><br>	group.Wait()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NextId</span><span class="hljs-params">(ctx context.Context, keyPrefix <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int64</span> &#123;<br>	<span class="hljs-comment">// 1.生成时间戳</span><br>	now := time.Now()<br>	nowSecond := now.Unix()<br>	timeStamp := nowSecond - BeginTimeStamp<br>    <br>	<span class="hljs-comment">// 2.生成序列号</span><br>	date := now.Format(<span class="hljs-string">&quot;2006:01:02&quot;</span>)<br>	<span class="hljs-keyword">var</span> count, _ = RDB.Incr(ctx, <span class="hljs-string">&quot;icr:&quot;</span>+keyPrefix+<span class="hljs-string">&quot;:&quot;</span>+date).Result()<br>    <br>	<span class="hljs-comment">// 3.把时间戳和序列号拼接并返回</span><br>	<span class="hljs-keyword">return</span> timeStamp&lt;&lt;<span class="hljs-number">32</span> | count<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>输出 因为是多线程，输出顺序不确定</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs">169546741702459711<br>169546741702459712<br>169546741702459715<br>169546741702459716<br>169546741702459717<br>169546741702459713<br>169546741702459719<br>169546741702459714<br>169546741702459718<br>169546741702459720<br></code></pre></td></tr></table></figure>
+
+
                 
               </div>
             
@@ -446,8 +346,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Redis做缓存</div>
-      <div>http://example.com/2023/03/27/Redis/Redis做缓存/</div>
+      <div>Redis基础</div>
+      <div>http://example.com/2023/04/02/Redis/新建文本文档/</div>
     </div>
     <div class="license-meta">
       
@@ -459,7 +359,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月27日</div>
+          <div>2023年4月2日</div>
         </div>
       
       
@@ -491,9 +391,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/02/Redis/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/" title="Redis基础">
+                      <a href="/2023/04/05/Go/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="Go基础语法">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis基础</span>
+                        <span class="hidden-mobile">Go基础语法</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -501,8 +401,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/22/Redis/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" title="Redis基础">
-                        <span class="hidden-mobile">Redis基础</span>
+                      <a href="/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/" title="Redis做缓存">
+                        <span class="hidden-mobile">Redis做缓存</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

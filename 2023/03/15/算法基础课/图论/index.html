@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/03/15/images/%E5%9B%BE%E8%AE%BA/image-20230425090748873.png">
 <meta property="article:published_time" content="2023-03-15T01:44:21.710Z">
-<meta property="article:modified_time" content="2023-04-25T02:18:50.748Z">
+<meta property="article:modified_time" content="2023-04-25T02:30:18.491Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
@@ -84,7 +84,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
 
 
 <body>
@@ -332,7 +336,9 @@
 <h4 id="输出格式-3">输出格式</h4>
 <p>输出一个整数 m，表示将重心删除后，剩余各个连通块中点数的最大值。</p>
 <h4 id="数据范围-3">数据范围</h4>
-<p>$$ 1 ≤ n ≤ 10^5   $$</p>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">
+1 ≤ n ≤ 10^5   
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span>
 <h4 id="输入样例">输入样例</h4>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">9</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">7</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">8</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">9</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-3">输出样例：</h4>

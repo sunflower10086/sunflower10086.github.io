@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="sunflower">
 <meta property="og:description" content="视图的介绍和基本用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
-<meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png">
-<meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png">
-<meta property="og:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png">
+<meta property="og:image" content="http://example.com/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
+<meta property="og:image" content="http://example.com/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png">
+<meta property="og:image" content="http://example.com/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png">
+<meta property="og:image" content="http://example.com/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png">
 <meta property="article:published_time" content="2023-03-18T01:25:11.000Z">
 <meta property="article:modified_time" content="2023-03-18T08:18:54.797Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
+<meta name="twitter:image" content="http://example.com/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
   
   
   
@@ -87,11 +87,7 @@
 
 
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 <body>
@@ -285,59 +281,61 @@
                 
                 <p>视图的介绍和基本用法</p>
 <span id="more"></span>
-
-<h2 id="视图的介绍"><a href="#视图的介绍" class="headerlink" title="视图的介绍"></a>视图的介绍</h2><p>视图（View）一种虚拟存在的表，视图中的数据在数据库中并不是真实存在的，行和列的数据来的自定义视图的查询中使用的表，并且时在使用视图的时候动态生成的</p>
+<h2 id="视图的介绍">视图的介绍</h2>
+<p>视图（View）一种虚拟存在的表，视图中的数据在数据库中并不是真实存在的，行和列的数据来的自定义视图的查询中使用的表，并且时在使用视图的时候动态生成的</p>
 <p>视图只保存查询的逻辑，不保存查询的数据，<code>所以视图的作用就是相当于存储了一条我们编写好的SQL语句，我们再次使用这条SQL语句的时候不许要自己编写，直接查询视图就可以了</code></p>
-<h3 id="视图的作用"><a href="#视图的作用" class="headerlink" title="视图的作用"></a>视图的作用</h3><h4 id="1-简单"><a href="#1-简单" class="headerlink" title="1.简单"></a>1.简单</h4><p>经常被用到的查询可以定义为视图，使得以后进行的操作变的简单</p>
+<h3 id="视图的作用">视图的作用</h3>
+<h4 id="1-简单">1.简单</h4>
+<p>经常被用到的查询可以定义为视图，使得以后进行的操作变的简单</p>
 <p class="note note-primary">即封装SQL语句</p>
-
-<h4 id="2-安全"><a href="#2-安全" class="headerlink" title="2.安全"></a>2.安全</h4><p>数据库可以授权，当不想让用户看到某些列的时候，可以让用户只看到视图，视图中不显示这一列</p>
-<h4 id="3-数据独立"><a href="#3-数据独立" class="headerlink" title="3.数据独立"></a>3.数据独立</h4><p>帮助用户屏蔽真实表结构变化带来的影响</p>
-<h2 id="视图的SQL语句"><a href="#视图的SQL语句" class="headerlink" title="视图的SQL语句"></a>视图的SQL语句</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> [<span class="hljs-keyword">or</span> replace] <span class="hljs-keyword">view</span> 视图名称[(列名列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br><br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_1 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> `id`, `name` <span class="hljs-keyword">FROM</span> `<span class="hljs-keyword">user</span>` <span class="hljs-keyword">WHERE</span> id<span class="hljs-operator">&lt;</span><span class="hljs-number">10</span>; <br></code></pre></td></tr></table></figure>
-
-<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 查看创建视图的语句<br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> 视图名称<br># 查看视图数据<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> 视图名称<br><br><br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> user_view_1;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> user_view_1;<br></code></pre></td></tr></table></figure>
-
-<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 方法一<br><span class="hljs-keyword">create</span> [<span class="hljs-keyword">or</span> replace] <span class="hljs-keyword">view</span> 视图名称[(列名列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br># 方法二<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">view</span> 视图名称[(视图列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br><br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> user_view_2 <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">&lt;</span> <span class="hljs-number">10</span>;<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">view</span> `user_view_1` <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">&lt;</span> <span class="hljs-number">10</span>;<br><br></code></pre></td></tr></table></figure>
-
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">view</span> [if <span class="hljs-keyword">exists</span>] 视图名称，视图名称<br><br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> `user_view_2`<br></code></pre></td></tr></table></figure>
-
-<h2 id="注意！！！"><a href="#注意！！！" class="headerlink" title="注意！！！"></a>注意！！！</h2><h3 id="基于数据库表创建视图"><a href="#基于数据库表创建视图" class="headerlink" title="基于数据库表创建视图"></a>基于数据库表创建视图</h3><p>我们创建视图的时候[with [cascaded | local] check option]这个视图检查选项我们需要注意</p>
+<h4 id="2-安全">2.安全</h4>
+<p>数据库可以授权，当不想让用户看到某些列的时候，可以让用户只看到视图，视图中不显示这一列</p>
+<h4 id="3-数据独立">3.数据独立</h4>
+<p>帮助用户屏蔽真实表结构变化带来的影响</p>
+<h2 id="视图的SQL语句">视图的SQL语句</h2>
+<h3 id="创建">创建</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> [<span class="hljs-keyword">or</span> replace] <span class="hljs-keyword">view</span> 视图名称[(列名列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br><br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_1 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> `id`, `name` <span class="hljs-keyword">FROM</span> `<span class="hljs-keyword">user</span>` <span class="hljs-keyword">WHERE</span> id<span class="hljs-operator">&lt;</span><span class="hljs-number">10</span>; <br></code></pre></td></tr></table></figure>
+<h3 id="查询">查询</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 查看创建视图的语句<br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> 视图名称<br># 查看视图数据<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> 视图名称<br><br><br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> user_view_1;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> user_view_1;<br></code></pre></td></tr></table></figure>
+<h3 id="修改">修改</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 方法一<br><span class="hljs-keyword">create</span> [<span class="hljs-keyword">or</span> replace] <span class="hljs-keyword">view</span> 视图名称[(列名列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br># 方法二<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">view</span> 视图名称[(视图列表)] <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span>语句 [<span class="hljs-keyword">with</span> [<span class="hljs-keyword">cascaded</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">local</span>] <span class="hljs-keyword">check</span> option]<br><br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> user_view_2 <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">&lt;</span> <span class="hljs-number">10</span>;<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">view</span> `user_view_1` <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id <span class="hljs-operator">&lt;</span> <span class="hljs-number">10</span>;<br><br></code></pre></td></tr></table></figure>
+<h3 id="删除">删除</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">view</span> [if <span class="hljs-keyword">exists</span>] 视图名称，视图名称<br><br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> `user_view_2`<br></code></pre></td></tr></table></figure>
+<h2 id="注意！！！">注意！！！</h2>
+<h3 id="基于数据库表创建视图">基于数据库表创建视图</h3>
+<p>我们创建视图的时候[with [cascaded | local] check option]这个视图检查选项我们需要注意</p>
 <blockquote>
 <p>我们可以对视图进行增删改的操作，这些操作会直接操作基表（创建视图时所基于的表）,如果我们创建视图的时候有where条件，那么我们不加视图检查选项的时候就会<code>执行所有</code>的增删改的操作，如果我们加了这个条件就会先判断增删改的操作满不满足where的条件</p>
 </blockquote>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span>;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br>都可以成功插入<br>但是查询的时候看不见job这条数据<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
-
 <p>视图中的数据</p>
-<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
+<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
 <p>数据库中的数据(id不一样是因为我设置的id自增，在做测试的时候插入又删除了几条数据)</p>
-<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
+<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
 <p>如果创建视图的时候加上检查选项选项，那么不满足条件的插入会报错，不让插入</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CASCADED</span> <span class="hljs-keyword">CHECK</span> OPTION;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
-<h3 id="基于视图创建视图"><a href="#基于视图创建视图" class="headerlink" title="基于视图创建视图"></a>基于视图创建视图</h3><h4 id="cascaded"><a href="#cascaded" class="headerlink" title="cascaded"></a>cascaded</h4><ul>
+<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
+<h3 id="基于视图创建视图">基于视图创建视图</h3>
+<h4 id="cascaded">cascaded</h4>
+<ul>
 <li>两个视图都没有检查选项(随便插入，没有限制)</li>
 <li>新视图有限制，老视图没有限制</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_1 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> `<span class="hljs-keyword">user</span>` <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>; <br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_1 <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CASCADED</span> <span class="hljs-keyword">CHECK</span> OPTION;<br></code></pre></td></tr></table></figure>
-
 <p>此时向<code>user_view_2</code>中擦汗如数据MySQL会自动帮我们给老视图加上检查选项，在插入的时候就会先看数据是否满足<code>user_view_2</code>的限制，然后再去看是否满足<code>user_view_1</code>的条件，只有全部满足才会成功插入</p>
 <p class="note note-warning">此时向user_view_1中插入数据没有限制，只有在往user_view_2中插入数据的时候才会给user_view_1加上限制</p>
-
 <ul>
 <li>新视图没有限制，老视图有限制</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_1 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> `<span class="hljs-keyword">user</span>` <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>  <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CASCADED</span> <span class="hljs-keyword">CHECK</span> OPTION; <br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_1 <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span>;<br></code></pre></td></tr></table></figure>
-
 <p>此时向<code>user_view_2</code>中插入数据，不会看<code>user_view_2</code>的限制，直接看是否满足<code>user_view_1</code>的条件，不满足不让插入，满足才可以插入</p>
 <p class="note note-primary">总结：如果新视图有检查选项，那么MySQL会自动上传递检查选项，给每一个都加上</p>
-
-<h4 id="local"><a href="#local" class="headerlink" title="local"></a>local</h4><p class="note note-info">与cascaded基本相同，有一点本质的区别，local只会限制本视图，不会递归的给父视图加上限制条件</p>
-
-<h2 id="视图的更新"><a href="#视图的更新" class="headerlink" title="视图的更新"></a>视图的更新</h2><p>只有当视图中的行与基础表中的行一一对应的时候我们才能更新，只要包含下面任何一项都不能更新</p>
-<p><img src="/./../../images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
+<h4 id="local">local</h4>
+<p class="note note-info">与cascaded基本相同，有一点本质的区别，local只会限制本视图，不会递归的给父视图加上限制条件</p>
+<h2 id="视图的更新">视图的更新</h2>
+<p>只有当视图中的行与基础表中的行一一对应的时候我们才能更新，只要包含下面任何一项都不能更新</p>
+<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> user_count_view <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> user_count_view <span class="hljs-keyword">values</span>(<span class="hljs-number">10</span>); # 此时会报错<br></code></pre></td></tr></table></figure>
-
 
                 
               </div>

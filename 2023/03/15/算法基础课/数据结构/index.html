@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://example.com/2023/03/15/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/699f709879ae818cacb1304136db221.jpg">
 <meta property="og:image" content="http://example.com/2023/03/15/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/12e3cdae287d78e88a5f6fde7153548.jpg">
 <meta property="article:published_time" content="2023-03-15T01:44:21.704Z">
-<meta property="article:modified_time" content="2023-04-25T02:21:11.450Z">
+<meta property="article:modified_time" content="2023-04-26T01:56:17.361Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
@@ -383,8 +383,8 @@
 <h3 id="输出格式-2">输出格式</h3>
 <p>共一行，包含 N 个整数，其中第 i 个数表示第 i 个数的左边第一个比它小的数，如果不存在则输出 −1。</p>
 <h3 id="数据范围-2">数据范围</h3>
-<p>1 ≤ N ≤$$ 10^5$$</p>
-<p>1 ≤ 数列中元素 ≤$$ 10^9$$</p>
+<p>1 ≤ N ≤ 10<sup>5</sup></p>
+<p>1 ≤ 数列中元素 ≤ 10<sup>9</sup></p>
 <h3 id="输入样例：-3">输入样例：</h3>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">5</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">7</span> <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <h3 id="输出样例：-3">输出样例：</h3>
@@ -423,7 +423,7 @@
 <p>对于每个询问指令 <code>Q x</code>，都要输出一个整数作为结果，表示 x 在集合中出现的次数。</p>
 <p>每个结果占一行。</p>
 <h4 id="数据范围-3">数据范围</h4>
-<p>$$ 1 ≤ N ≤ 2∗10^4 $$</p>
+<p>1 ≤ N ≤ 2∗10<sup>4 </sup></p>
 <h4 id="输入样例：-4">输入样例：</h4>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-number">5</span><br><span class="hljs-selector-tag">I</span> abc<br><span class="hljs-selector-tag">Q</span> abc<br><span class="hljs-selector-tag">Q</span> ab<br><span class="hljs-selector-tag">I</span> ab<br><span class="hljs-selector-tag">Q</span> ab<br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-4">输出样例：</h4>
@@ -432,7 +432,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100010</span>;<br><br><span class="hljs-type">int</span> n;<br><span class="hljs-type">int</span> son[N][<span class="hljs-number">26</span>], cnt[N], idx;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">size</span>(); i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(!son[p][u]) son[p][u] = ++ idx;<br>        p = son[p][u];<br>    &#125;<br>    <br>    cnt[p] ++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">size</span>(); i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>        <span class="hljs-keyword">if</span> (!son[p][u]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        p = son[p][u];<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> cnt[p];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br>    <br>    <span class="hljs-keyword">while</span> (n --) <br>    &#123;<br>        string op, str;<br>        cin &gt;&gt; op &gt;&gt; str;<br>        <br>        <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&quot;I&quot;</span>) <span class="hljs-built_in">insert</span>(str);<br>        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-built_in">query</span>(str) &lt;&lt; endl;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="最大异或对">最大异或对</h3>
 <blockquote>
-<p>异或也成为不进位加法，符号为<code>^</code>，<code>1^1 = 0</code>,<code> 0^0 = 0</code>, <code>1^0 = 1</code>;</p>
+<p>异或也成为不进位加法，符号为<code>^</code>，<code>1^1&lt; = 0</code>,<code> 0^0 = 0</code>, <code>1^0 = 1</code>;</p>
 <p>当我们找最大的异或结果时，（暴力相信大家都会，直接跳过暴力。）</p>
 <p><strong>贪心做法</strong></p>
 <p>一个数我们用二进制表示，最大31位，</p>
@@ -449,15 +449,15 @@
 </blockquote>
 <p><img src="./../../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/699f709879ae818cacb1304136db221.jpg" srcset="/img/loading.gif" lazyload alt="699f709879ae818cacb1304136db221"></p>
 <h4 id="题目描述-5">题目描述</h4>
-<p>在给定的 N 个整数$$A_1，A_2……A_n$$中选出两个进行 <strong>xor</strong>（异或）运算，得到的结果最大是多少？</p>
+<p>在给定的 N 个整数A_1，A_2……A_n中选出两个进行 <strong>xor</strong>（异或）运算，得到的结果最大是多少？</p>
 <h4 id="输入格式-5">输入格式</h4>
 <p>第一行输入一个整数 N。</p>
-<p>第二行输入 N 个整数$$ A_1～A_N$$。</p>
+<p>第二行输入 N 个整数 A_1～A_N。</p>
 <h4 id="输出格式-4">输出格式</h4>
 <p>输出一个整数表示答案。</p>
 <h4 id="数据范围-4">数据范围</h4>
-<p>$$ 1 ≤ N ≤ 10^5$$</p>
-<p>$$ 0 ≤ A~i~ &lt;  {2}^{31} $$</p>
+<p>1 ≤ N ≤ 10<sup>5</sup></p>
+<p>0 ≤ A~i~ &lt;  {2}<sup>{31} </sup></p>
 <h4 id="输入样例：-5">输入样例：</h4>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-5">输出样例：</h4>
@@ -492,7 +492,7 @@
 <p>对于每个询问指令 <code>Q a b</code>，都要输出一个结果，如果 a 和 b 在同一集合内，则输出 <code>Yes</code>，否则输出 <code>No</code>。</p>
 <p>每个结果占一行。</p>
 <h4 id="数据范围-5">数据范围</h4>
-<p>$$ 1 ≤ n, m ≤ 10^5 $$</p>
+<p>1 ≤ n, m ≤ 10<sup>5 </sup></p>
 <h4 id="输入样例：-6">输入样例：</h4>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">4</span> <span class="hljs-number">5</span><br><span class="hljs-attribute">M</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span><br><span class="hljs-attribute">M</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span><br><span class="hljs-attribute">Q</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span><br><span class="hljs-attribute">Q</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span><br><span class="hljs-attribute">Q</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-6">输出样例：</h4>
@@ -529,8 +529,8 @@
 <h4 id="输出格式-6">输出格式</h4>
 <p>只有一个整数，表示假话的数目。</p>
 <h4 id="数据范围-6">数据范围</h4>
-<p>$$ 1≤N≤50000，$$<br>
-$$0≤K≤100000$$</p>
+<p>1≤N≤50000，<br>
+0≤K≤100000</p>
 <h4 id="输入样例：-7">输入样例：</h4>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span><span class="hljs-number">7</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">101</span> <span class="hljs-number">1</span> <br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">3</span> <br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">1</span> <br><span class="hljs-symbol">1 </span><span class="hljs-number">5</span> <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-7">输出样例：</h4>
@@ -555,8 +555,8 @@ $$0≤K≤100000$$</p>
 <h4 id="输出格式-7">输出格式</h4>
 <p>共一行，包含 m 个整数，表示整数数列中前 m 小的数。</p>
 <h4 id="数据范围-7">数据范围</h4>
-<p>$$ 1 ≤ m ≤ n ≤ 10^5$$<br>
-$$1 ≤ 数列中元素 ≤ 10^9$$</p>
+<p>1 ≤ m ≤ n ≤ 10<sup>5</sup><br>
+1 ≤ 数列中元素 ≤ 10<sup>9</sup></p>
 <h4 id="输入样例：-8">输入样例：</h4>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">5</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-8">输出样例：</h4>
@@ -566,26 +566,28 @@ $$1 ≤ 数列中元素 ≤ 10^9$$</p>
 <h2 id="十一、哈希表">十一、哈希表</h2>
 <h3 id="字符串哈希">字符串哈希</h3>
 <h4 id="题目描述：">题目描述：</h4>
-<p>给定一个长度为 n 的字符串，再给定 m 个询问，每个询问包含四个整数$$ l_1,r_1,l_2,r_2$$，请你判断$$[l_1,r_1]$$ 和$$[l_2,r_2]$$ 这两个区间所包含的字符串子串是否完全相同。</p>
+<p>给定一个长度为 n 的字符串，再给定 m 个询问，每个询问包含四个整数 l_1,r_1,l_2,r_2，请你判断[l_1,r_1] 和[l_2,r_2] 这两个区间所包含的字符串子串是否完全相同。</p>
 <p>字符串中只包含大小写英文字母和数字。</p>
 <h4 id="输入格式-9">输入格式</h4>
 <p>第一行包含整数 n 和 m，表示字符串长度和询问次数。</p>
 <p>第二行包含一个长度为 n 的字符串，字符串中只包含大小写英文字母和数字。</p>
-<p>接下来 m 行，每行包含四个整数$$ l_1,r_1,l_2,r_2$$，表示一次询问所涉及的两个区间。</p>
+<p>接下来 m 行，每行包含四个整数 l_1,r_1,l_2,r_2，表示一次询问所涉及的两个区间。</p>
 <p>注意，字符串的位置从 1 开始编号。</p>
 <h4 id="输出格式-8">输出格式</h4>
 <p>对于每个询问输出一个结果，如果两个字符串子串完全相同则输出 <code>Yes</code>，否则输出 <code>No</code>。</p>
 <p>每个结果占一行。</p>
 <h4 id="数据范围-8">数据范围</h4>
-<p>$$ 1 ≤ n, m ≤ 10^5$$</p>
+<p>1 ≤ n, m ≤ 10<sup>5</sup></p>
 <h4 id="输入样例：-9">输入样例：</h4>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">8</span> <span class="hljs-number">3</span><br><span class="hljs-attribute">aabbaabb</span><br><span class="hljs-attribute">1</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span> <span class="hljs-number">7</span><br><span class="hljs-attribute">1</span> <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span><br><span class="hljs-attribute">1</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 <h4 id="输出样例：-9">输出样例：</h4>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">Yes</span><br><span class="hljs-keyword">No</span><br><span class="hljs-keyword">Yes</span><br></code></pre></td></tr></table></figure>
 <h4 id="思路：">思路：</h4>
 <p>把字符串映射成哈希值</p>
-<p>$$ 映射公式 (X_1 × P^{n−1} + X_2 × P^{n−2} + ⋯ + X_{n−1} × P^1 + X_n × P^0) mod Q $$</p>
-<p>Q取  2^64^   P取131或1331的时候可以理解为不会产生冲突</p>
+<p>映射公式</p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>×</mo><msup><mi>P</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>2</mn></msub><mo>×</mo><msup><mi>P</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msup><mo>+</mo><mo>⋯</mo><mo>+</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>×</mo><msup><mi>P</mi><mn>1</mn></msup><mo>+</mo><msub><mi>X</mi><mi>n</mi></msub><mo>×</mo><msup><mi>P</mi><mn>0</mn></msup><mo stretchy="false">)</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>Q</mi></mrow><annotation encoding="application/x-tex">(X_1 × P^{n−1} + X_2 × P^{n−2} + ⋯ + X_{n−1} × P^1 + X_n × P^0) mod Q
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">Q</span></span></span></span></span></p>
+<p>Q取  2<sup>64</sup>   P取131或1331的时候可以理解为不会产生冲突</p>
 <blockquote>
 <p>给一个字符串，假设是P进制，例如ABCDE</p>
 <p>h[1] = h[0] * 131 + ‘A’ - a;</p>
@@ -595,7 +597,7 @@ $$1 ≤ 数列中元素 ≤ 10^9$$</p>
 <p>其中p存储的每一位之间的进制差</p>
 <p>计算一个字串的哈希值就是这个公式<code>h[r] - h[l - 1] * p[r - l + 1]</code></p>
 <p>例如ABCDE和ABC前三个字符是一样的，只差两位</p>
-<p>乘上 P^2^ 把 ABC 变为 ABC00，再用ABCDE - ABC00就可以得到DE的哈希值</p>
+<p>乘上 P<sup>2</sup> 把 ABC 变为 ABC00，再用ABCDE - ABC00就可以得到DE的哈希值</p>
 </blockquote>
 <h4 id="代码：-4">代码：</h4>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ULL;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100010</span>, P = <span class="hljs-number">131</span>;<br><br><span class="hljs-type">int</span> n, m;<br>ULL h[N], p[N];<br><br><span class="hljs-function">ULL <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> h[r] - h[l - <span class="hljs-number">1</span>] * p[r - l + <span class="hljs-number">1</span>];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    string s;<br>    cin &gt;&gt; s;<br>    <br>    p[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) &#123;<br>        p[i] = p[i - <span class="hljs-number">1</span>] * P;<br>        h[i] = h[i - <span class="hljs-number">1</span>] * P + s[i - <span class="hljs-number">1</span>] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(m --) <br>    &#123;<br>        <span class="hljs-type">int</span> l1, r1, l2, r2;<br>        cin &gt;&gt; l1 &gt;&gt; r1 &gt;&gt; l2 &gt;&gt; r2;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">get</span>(l1, r1) == <span class="hljs-built_in">get</span>(l2, r2)) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Yes&quot;</span>);<br>        <span class="hljs-keyword">else</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;No&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>

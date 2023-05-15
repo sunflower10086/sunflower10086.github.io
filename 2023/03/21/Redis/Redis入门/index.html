@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/myPhoto.jpg">
-  <link rel="icon" href="/img/myPhoto.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/author.jpg">
+  <link rel="icon" href="/img/author.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -346,36 +346,36 @@
 <h3 id="3-1-在Ubuntu中直接安装">3.1 在Ubuntu中直接安装</h3>
 <p class="note note-warning">直接安装无法设置后台运行，还是建议自己手动安装</p>
 <p>版本比较低应该是5版本的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update<br>sudo apt-get install redis<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis</span><br></pre></td></tr></table></figure>
 <h3 id="3-2官网下载">3.2官网下载</h3>
 <p>首先下载redis的安装包，可以去<a target="_blank" rel="noopener" href="https://redis.io/download/">官网</a>下载</p>
 <p>在官网下载完成之后我们把安装包移动到<code>/usr/local/src下</code></p>
 <p>然后解压</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar -zxvf redis×××××(你的安装包的名字)<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis×××××(你的安装包的名字)</span><br></pre></td></tr></table></figure>
 <p>然后我们要下载gcc，因为redis是基于c++开发的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install gcc<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc</span><br></pre></td></tr></table></figure>
 <p>安装完成之后进入<code>/usr/local/src</code>下载安装redis</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/src/redis<br><br>make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/local/src/redis</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <p>如果出现这个错误，我们可以执行这个命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">/bin/sh: 1: pkg-config: not found<br><br>sudo apt-get install pkg-config<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh: 1: pkg-config: not found</span><br><span class="line"></span><br><span class="line">sudo apt-get install pkg-config</span><br></pre></td></tr></table></figure>
 <p>此时在<code>/usr/local/bin</code>中会多这几个文件（docker那个不是）</p>
 <p><img src="./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321205142611.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="3-3-设置快捷启动">3.3 设置快捷启动</h3>
 <p>此时直接<code>redis-server</code>会在前台打开redis，很不方便，我们设置在后台打开redis，所以我们要去修改配置文件</p>
 <p>在<code>/usr/local/src/redis</code>中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 先复制一下这个配置文件，防止我们把文件该坏</span><br><span class="hljs-built_in">cp</span> redis.conf redis.conf.bck<br><br><span class="hljs-comment"># 然后</span><br>vim redis.conf<br></code></pre></td></tr></table></figure>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-comment"># 在文件中修改这些配置</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"># 1.bind默认为127.0.0.1，只允许本机访问，改为0.0.0.0，任意ip地址都可以访问</span><br><span class="hljs-attr">bind</span> <span class="hljs-string">0.0.0.0</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">#2.守护进程，修改为yes之后可以后台运行</span><br><span class="hljs-attr">daemonize</span> <span class="hljs-string">yes</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">#3. 设置密码，设置之后访问redis必须需要密码</span><br><span class="hljs-attr">requirepass</span> <span class="hljs-string">123456</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先复制一下这个配置文件，防止我们把文件该坏</span></span><br><span class="line"><span class="built_in">cp</span> redis.conf redis.conf.bck</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后</span></span><br><span class="line">vim redis.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在文件中修改这些配置</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 1.bind默认为127.0.0.1，只允许本机访问，改为0.0.0.0，任意ip地址都可以访问</span></span><br><span class="line"><span class="attr">bind</span> <span class="string">0.0.0.0</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#2.守护进程，修改为yes之后可以后台运行</span></span><br><span class="line"><span class="attr">daemonize</span> <span class="string">yes</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#3. 设置密码，设置之后访问redis必须需要密码</span></span><br><span class="line"><span class="attr">requirepass</span> <span class="string">123456</span></span><br></pre></td></tr></table></figure>
 <p>其他的常见配置</p>
 <p><img src="./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321205859087.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>配置好之后我们要设置开机自启，但是我用的是wsl，无法设置，所以我们曲线救国，写一个shell脚本</p>
 <p>在自己的家目录下，创建一个<code>redis-start.sh</code>的文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">! /bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">先进到redis的目录，然后启动redis，同时指定配置文件</span><br>cd /usr/local/src/redis &amp;&amp; sudo redis-server redis.conf<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先进到redis的目录，然后启动redis，同时指定配置文件</span></span><br><span class="line">cd /usr/local/src/redis &amp;&amp; sudo redis-server redis.conf</span><br></pre></td></tr></table></figure>
 <p>我们启动redis时只需要运行这个shell脚本就行</p>
 <p>此时用top也可以查看到进程</p>
 <p><img src="./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210055778.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h2 id="4-使用redis-cli访问redis">4.使用redis-cli访问redis</h2>
 <p>直接执行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">redis-cli [options] [commonds]<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli [options] [commonds]</span><br></pre></td></tr></table></figure>
 <p>常见的options</p>
 <ul>
 <li>-h 127.0.0.1 指定要连接redis的IP地址，默认是127.0.0.1</li>
@@ -389,7 +389,7 @@
 <p>我们登录不指定密码，使用命令会报这样的错</p>
 <p><img src="./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210750478.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>我们只需要输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">auth 123456<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth 123456</span><br></pre></td></tr></table></figure>
 <p>例如，不区分大小写，出现ok说明登录成功</p>
 <p><img src="./../../images/Redis%E5%85%A5%E9%97%A8/image-20230321210905775.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>此时我们再ping，就会返回pong</p>

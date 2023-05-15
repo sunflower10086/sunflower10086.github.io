@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/myPhoto.jpg">
-  <link rel="icon" href="/img/myPhoto.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/author.jpg">
+  <link rel="icon" href="/img/author.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -341,23 +341,23 @@
 </blockquote>
 <h2 id="索引的语法">索引的语法</h2>
 <h3 id="创建索引">创建索引</h3>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> [<span class="hljs-keyword">unique</span> <span class="hljs-operator">|</span> fulltext] index index_name <span class="hljs-keyword">on</span> table_name_ (index_col_name)<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span> <span class="operator">|</span> fulltext] index index_name <span class="keyword">on</span> table_name_ (index_col_name)</span><br></pre></td></tr></table></figure>
 <h3 id="查看索引">查看索引</h3>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> index <span class="hljs-keyword">from</span> table_name_<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> index <span class="keyword">from</span> table_name_</span><br></pre></td></tr></table></figure>
 <h3 id="删除索引">删除索引</h3>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> index index_name <span class="hljs-keyword">on</span> table_name_<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> index index_name <span class="keyword">on</span> table_name_</span><br></pre></td></tr></table></figure>
 <h2 id="索引性能">索引性能</h2>
 <h3 id="性能分析">性能分析</h3>
 <h4 id="查看执行频次">查看执行频次</h4>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GLOBAL</span> STATUS <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;Com_______&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Com_______&#x27;</span></span><br></pre></td></tr></table></figure>
 <h4 id="慢查询日志">慢查询日志</h4>
 <h4 id="show-profiles查看sql语句消耗时间">show profiles查看sql语句消耗时间</h4>
 <p>查看是否支持profiling</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> @<span class="hljs-variable">@have</span>_profiling;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @<span class="variable">@have</span>_profiling;</span><br></pre></td></tr></table></figure>
 <p>开启profiling</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">set</span> profiling<span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> profiling<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 <p>查看sql消耗时间</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">-</span>查看每条<span class="hljs-keyword">sql</span>的耗时情况<br><span class="hljs-keyword">show</span> profiles;<br><br><span class="hljs-operator">-</span>查看指定query_id的<span class="hljs-keyword">sql</span>语句的各个阶段的耗时情况<br><span class="hljs-keyword">show</span> profile <span class="hljs-keyword">for</span> query query_id;<br><br><span class="hljs-operator">-</span>查看指定query_id的<span class="hljs-keyword">sql</span>语句的CPU使用情况<br><span class="hljs-keyword">show</span> profile cpu query query_id;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">-</span>查看每条<span class="keyword">sql</span>的耗时情况</span><br><span class="line"><span class="keyword">show</span> profiles;</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>查看指定query_id的<span class="keyword">sql</span>语句的各个阶段的耗时情况</span><br><span class="line"><span class="keyword">show</span> profile <span class="keyword">for</span> query query_id;</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>查看指定query_id的<span class="keyword">sql</span>语句的CPU使用情况</span><br><span class="line"><span class="keyword">show</span> profile cpu query query_id;</span><br></pre></td></tr></table></figure>
 <h4 id="explan查看sql语句的详细信息">explan查看sql语句的详细信息</h4>
 <h2 id="索引的使用规则">索引的使用规则</h2>
 <h3 id="1-最左前缀法则">1.最左前缀法则</h3>
@@ -404,7 +404,7 @@
 <p>force index（必须使用这个索引，一定用）</p>
 </li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">explain <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> table_name use <span class="hljs-operator">||</span> ignore <span class="hljs-operator">||</span> force index(index_name) where...<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> table_name use <span class="operator">||</span> ignore <span class="operator">||</span> force index(index_name) where...</span><br></pre></td></tr></table></figure>
 <h3 id="9-覆盖索引">9.覆盖索引</h3>
 <blockquote>
 <p>尽量使用覆盖索引（查询使用了索引，并且需要返回的列，在该索引中已经全部能够全部找到），减少select*</p>
@@ -415,7 +415,7 @@
 <p>当字段类型为字符串（varchar，text等）时，有时候需要索引很大的字符串，这会让索引变得很大，查询时，浪费磁盘I/O,影响查询效率。这时值将字符串一部分前缀建立索引，大大节约索引空间，提高索引效率</p>
 </blockquote>
 <h4 id="语法">语法</h4>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> index idx_××× <span class="hljs-keyword">on</span> table_name(cloumn(n));<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index idx_××× <span class="keyword">on</span> table_name(cloumn(n));</span><br></pre></td></tr></table></figure>
 <h4 id="最长前缀匹配">最长前缀匹配</h4>
 <p>所有重复的值与总数的比值，最好是1，此时索引性能是最好的</p>
 <h3 id="11-单列索引和联合索引">11.单列索引和联合索引</h3>

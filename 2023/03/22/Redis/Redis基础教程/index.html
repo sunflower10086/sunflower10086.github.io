@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/myPhoto.jpg">
-  <link rel="icon" href="/img/myPhoto.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/author.jpg">
+  <link rel="icon" href="/img/author.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -334,7 +334,7 @@
 <h2 id="2-Redis的通用命令">2. Redis的通用命令</h2>
 <h3 id="1-keys">1.keys</h3>
 <p>查找key，可以有通配符<code>*, ?</code>(*表示多个，?表示一个字符)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">keys *<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keys *</span><br></pre></td></tr></table></figure>
 <p><code>keys *</code>效率太差，又因为redis是单线程的，所以不建议我们在生产环境设备上使用</p>
 <h3 id="2-del">2.del</h3>
 <p>删除一个<strong>指定</strong>的key</p>

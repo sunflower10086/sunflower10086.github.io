@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/myPhoto.jpg">
-  <link rel="icon" href="/img/myPhoto.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/author.jpg">
+  <link rel="icon" href="/img/author.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -295,7 +295,7 @@
 <p>最经典的应用就是对全库做备份的时候，必须加上全局锁，去保持数据的完整性</p>
 <p><img src="./../../images/MySQL%E9%94%81/image-20230318163449929.png" srcset="/img/loading.gif" lazyload alt="image-20230318163449929"></p>
 <p>全局加锁的语句</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">flush tables <span class="hljs-keyword">with</span> read lock; #加锁<br>mysqldump <span class="hljs-operator">-</span>uroot <span class="hljs-operator">-</span>p123456 库的名字 <span class="hljs-operator">&gt;</span> file_name<br>unlock tables; #解锁<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flush tables <span class="keyword">with</span> read lock; #加锁</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p123456 库的名字 <span class="operator">&gt;</span> file_name</span><br><span class="line">unlock tables; #解锁</span><br></pre></td></tr></table></figure>
 <h2 id="2-表级锁">2.表级锁</h2>
 <p>每次操作锁住整张表，锁定力度大，发生所冲突的概率最高，并发度最低</p>
 <h3 id="2-1表锁">2.1表锁</h3>
@@ -325,7 +325,7 @@
 <p>与读锁，写锁都不兼容，</p>
 <p class="note note-info">意向锁之间不会互斥</p>
 <p>以下语句可以查看意向锁及行锁的加锁情况:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">BEGIN</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> `<span class="hljs-keyword">user</span>` LOCK <span class="hljs-keyword">IN</span> SHARE MODE;<br><br><span class="hljs-keyword">select</span> object_schema, object_name, index_name, lock_type, lock_mode, lock_data <span class="hljs-keyword">from</span> performance_schema.data_locks;<br><br># 此时其他客户端可以加读锁，加写锁会被阻塞<br><br># 加意向排他锁类似<br># 此时其他客户端加读锁和加写锁会被阻塞<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` LOCK <span class="keyword">IN</span> SHARE MODE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> object_schema, object_name, index_name, lock_type, lock_mode, lock_data <span class="keyword">from</span> performance_schema.data_locks;</span><br><span class="line"></span><br><span class="line"># 此时其他客户端可以加读锁，加写锁会被阻塞</span><br><span class="line"></span><br><span class="line"># 加意向排他锁类似</span><br><span class="line"># 此时其他客户端加读锁和加写锁会被阻塞</span><br></pre></td></tr></table></figure>
 <p><img src="./../../images/MySQL%E9%94%81/image-20230318172215295.png" srcset="/img/loading.gif" lazyload alt="image-20230318172215295"></p>
 <h2 id="3-行级锁">3.行级锁</h2>
 <h3 id="3-1介绍">3.1介绍</h3>
@@ -354,7 +354,7 @@
     2.InnoDB的行锁是针对索引加的锁，当我们通过没有索引的列的条件检索数据，那么此时行锁就会升级为表锁
 </p>
 <p>此语句可以查看意向锁和行锁的加锁情况</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> object_schema, object_name, index_name, lock_type, lock_mode, lock_data <span class="hljs-keyword">from</span> performance_schema.data_locks;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> object_schema, object_name, index_name, lock_type, lock_mode, lock_data <span class="keyword">from</span> performance_schema.data_locks;</span><br></pre></td></tr></table></figure>
 <h3 id="3-3-间隙锁和临键锁">3.3 间隙锁和临键锁</h3>
 <p>next-key(临键锁)</p>
 <p><img src="./../../images/MySQL%E9%94%81/image-20230318202441171.png" srcset="/img/loading.gif" lazyload alt="image-20230318202441171"></p>

@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="欢迎来到sunflower的博客">
 <meta property="og:description" content="图论中常用到的算法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/15/images/%E5%9B%BE%E8%AE%BA/image-20230427093657727.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/15/images/%E5%9B%BE%E8%AE%BA/19_860e00c489-1_597ec77c49-8-queens.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/15/images/%E5%9B%BE%E8%AE%BA/image-20230425090748873.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230427093657727.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/19_860e00c489-1_597ec77c49-8-queens.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230425090748873.png">
 <meta property="article:published_time" content="2023-03-15T01:44:21.710Z">
-<meta property="article:modified_time" content="2023-05-16T02:56:54.439Z">
+<meta property="article:modified_time" content="2023-05-17T00:40:52.221Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sunflower10086.github.io/2023/03/15/images/%E5%9B%BE%E8%AE%BA/image-20230427093657727.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230427093657727.png">
   
   
   
@@ -299,12 +299,12 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> n;<br><span class="hljs-type">bool</span> st[N];<br><span class="hljs-type">int</span> path[N];<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(u==n)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        cout &lt;&lt; path[i]&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span> ;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span>(!st[i])<br>        &#123;<br>        path[u]=i;<br>        st[i]=<span class="hljs-literal">true</span>;<br>        <span class="hljs-built_in">dfs</span>(u+<span class="hljs-number">1</span>);<br>        st[i]=<span class="hljs-literal">false</span>;<br>        &#125;<br><br>    &#125;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br><br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="N皇后问题">N皇后问题</h3>
 <h4 id="题目讲解">题目讲解</h4>
-<p><img src="./../../images/%E5%9B%BE%E8%AE%BA/image-20230427093657727.png" srcset="/img/loading.gif" lazyload alt="image-20230427093657727"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230427093657727.png" srcset="/img/loading.gif" lazyload alt="image-20230427093657727"></p>
 <p>我们枚举每一行，然后每一个位置可以使用三个数组去判断他的斜边竖边上有没有皇后，</p>
 <p>根据图使用函数把三个位置表示出来即可，因为<code>y - x</code>可能小于0，所以我们加上一个偏移量n，使其不可能为负</p>
 <h4 id="题目描述-2">题目描述</h4>
 <p><em>n</em>−皇后问题是指将 <em>n</em> 个皇后放在 <em>n×n</em> 的国际象棋棋盘上，使得皇后不能相互攻击到，即任意两个皇后都不能处于同一行、同一列或同一斜线上。</p>
-<p><img src="./../../images/%E5%9B%BE%E8%AE%BA/19_860e00c489-1_597ec77c49-8-queens.png" srcset="/img/loading.gif" lazyload alt="1_597ec77c49-8-queens.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/19_860e00c489-1_597ec77c49-8-queens.png" srcset="/img/loading.gif" lazyload alt="1_597ec77c49-8-queens.png"></p>
 <p>现在给定整数 n，请你输出所有的满足条件的棋子摆法。</p>
 <h4 id="输入格式-2">输入格式</h4>
 <p>共一行，包含整数 <em>n</em>。</p>
@@ -393,7 +393,7 @@
 <blockquote>
 <p>重心是指树中的一个结点，如果将这个点删除后，剩余各个连通块中点数的最大值最小，那么这个节点被称为树的重心。</p>
 </blockquote>
-<p><img src="./../../images/%E5%9B%BE%E8%AE%BA/image-20230425090748873.png" srcset="/img/loading.gif" lazyload alt="树的重心"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230425090748873.png" srcset="/img/loading.gif" lazyload alt="树的重心"></p>
 <p>当我们找的不是根节点的时候比如上图中的<code>4</code>，此时有三个连通块，下面的连通块递归算，上面的连通块就是总数减去下面的个数，然后我们找到连通块中的最大值，然后在每个最大值中找到最小值，此时那个最小值的的删除的节点就是树的重心</p>
 <h4 id="题目描述-5">题目描述</h4>
 <p>给定一颗树，树中包含 n 个结点（编号 1∼n）和 n−1 条无向边。</p>

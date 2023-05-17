@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="欢迎来到sunflower的博客">
 <meta property="og:description" content="从Go的基础语法开始讲起">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/17/images/Go%E8%AF%AD%E6%B3%95/image-20230317165515101.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/17/images/Go%E8%AF%AD%E6%B3%95/image-20230317165804551.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230317165515101.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230317165804551.png">
 <meta property="article:published_time" content="2023-03-17T08:42:59.598Z">
-<meta property="article:modified_time" content="2023-05-16T02:57:43.165Z">
+<meta property="article:modified_time" content="2023-05-17T00:21:42.960Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sunflower10086.github.io/2023/03/17/images/Go%E8%AF%AD%E6%B3%95/image-20230317165515101.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230317165515101.png">
   
   
   
@@ -377,7 +377,7 @@ fmt.Println(basename(“abc”))      // “abc”</p>
 <h3 id="2-Slice">2.Slice</h3>
 <p>切片，底层是数组实现的，变长数组</p>
 <p>Slice底层</p>
-<p><img src="./../../images/Go%E8%AF%AD%E6%B3%95/image-20230317165515101.png" srcset="/img/loading.gif" lazyload alt="image-20230317165515101"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230317165515101.png" srcset="/img/loading.gif" lazyload alt="image-20230317165515101"></p>
 <p>一个指针指向一个数组，剩下两个元素一个是len，一个是cap</p>
 <p><strong>注意</strong> 绝对不要用指针指向 slice。切片本身已经是一个引用类型，所以它本身就是一个指针！！</p>
 <h4 id="append函数">append函数</h4>
@@ -396,7 +396,7 @@ fmt.Println(basename(“abc”))      // “abc”</p>
 <li>make(T) 返回一个类型为 T 的初始值，它只适用于 3 种内建的引用类型：切片、map 和 channel。</li>
 </ul>
 <p>换言之，new 函数分配内存，make 函数初始化；下图给出了区别：</p>
-<p><img src="./../../images/Go%E8%AF%AD%E6%B3%95/image-20230317165804551.png" srcset="/img/loading.gif" lazyload alt="image-20230317165804551"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230317165804551.png" srcset="/img/loading.gif" lazyload alt="image-20230317165804551"></p>
 <h4 id="bytes包">bytes包</h4>
 <p>这是一个长度可变的 bytes 的 buffer，提供 Read 和 Write 方法，读写长度未知的 bytes 最好使用 buffer。</p>
 <p>Buffer 可以这样定义：var buffer bytes.Buffer。</p>

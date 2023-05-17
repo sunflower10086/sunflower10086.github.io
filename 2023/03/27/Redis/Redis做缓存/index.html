@@ -23,21 +23,21 @@
 <meta property="og:site_name" content="欢迎来到sunflower的博客">
 <meta property="og:description" content="讲解Redis做缓存的方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327090734217.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327091118425.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327092654100.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094241975.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094436374.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094550917.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094612421.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094827113.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327085149035.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327090734217.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327091118425.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327092654100.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094241975.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094436374.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094550917.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094612421.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094827113.png">
 <meta property="article:published_time" content="2023-03-27T00:43:18.995Z">
-<meta property="article:modified_time" content="2023-04-02T02:44:46.338Z">
+<meta property="article:modified_time" content="2023-05-17T00:38:49.961Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sunflower10086.github.io/2023/03/27/images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327085149035.png">
   
   
   
@@ -323,7 +323,7 @@
 <li>高一致性需求：主动更新，并以超市剔除作为兜底方案。例如店铺详情查询的缓存</li>
 </ul>
 <h3 id="主动更新策略">主动更新策略</h3>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327085149035.png" srcset="/img/loading.gif" lazyload alt="image-20230327085149035"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327085149035.png" srcset="/img/loading.gif" lazyload alt="image-20230327085149035"></p>
 <p>一般使用第一种，需要我们自己编码</p>
 <h4 id="主动更新策略需要考虑三个问题">主动更新策略需要考虑三个问题</h4>
 <p>1.删除缓存还是更新缓存</p>
@@ -354,7 +354,7 @@
 </ul>
 <h2 id="2-缓存穿透">2.缓存穿透</h2>
 <p>指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会直接打到数据库</p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327090734217.png" srcset="/img/loading.gif" lazyload alt="image-20230327090734217"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327090734217.png" srcset="/img/loading.gif" lazyload alt="image-20230327090734217"></p>
 <p>常见的两种解决方案：</p>
 <ul>
 <li>缓存空对象：把空的值缓存到Redis
@@ -369,7 +369,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327091118425.png" srcset="/img/loading.gif" lazyload alt="image-20230327091118425"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327091118425.png" srcset="/img/loading.gif" lazyload alt="image-20230327091118425"></p>
 <ul>
 <li>布隆过滤：一种算法（目前不了解）
 <ul>
@@ -385,7 +385,7 @@
 </ul>
 <h2 id="3-缓存雪崩">3.缓存雪崩</h2>
 <p>在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来压力</p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327092654100.png" srcset="/img/loading.gif" lazyload alt="image-20230327092654100"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327092654100.png" srcset="/img/loading.gif" lazyload alt="image-20230327092654100"></p>
 <p>解决方案：</p>
 <ul>
 <li>给不同的key的TTL添加随机值，随机加一到五分钟（解决大量的热Key同时过期）</li>
@@ -395,7 +395,7 @@
 </ul>
 <h2 id="4-缓存击穿">4.缓存击穿</h2>
 <p>也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且缓存<strong>重建业务比较复杂</strong>的Key突然失效了，无数的请求访问会在一瞬间给数据库带来巨大的冲击</p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094241975.png" srcset="/img/loading.gif" lazyload alt="image-20230327094241975"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094241975.png" srcset="/img/loading.gif" lazyload alt="image-20230327094241975"></p>
 <p>当有n个线程在重建的时候，我们的服务器就会有极大的压力，服务就撑不住</p>
 <p>两种解决方案：</p>
 <ul>
@@ -404,13 +404,13 @@
 </ul>
 <h3 id="4-1-互斥锁">4.1 互斥锁</h3>
 <p>只有获取互斥锁的线程才可以重建缓存数据</p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094436374.png" srcset="/img/loading.gif" lazyload alt="image-20230327094436374"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094436374.png" srcset="/img/loading.gif" lazyload alt="image-20230327094436374"></p>
 <h3 id="4-2-逻辑过期">4.2 逻辑过期</h3>
 <p>在这个热Key的value中添加一个逻辑过期时间，而他的TTL是永不过期</p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094550917.png" srcset="/img/loading.gif" lazyload alt="image-20230327094550917"></p>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094612421.png" srcset="/img/loading.gif" lazyload alt="image-20230327094612421"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094550917.png" srcset="/img/loading.gif" lazyload alt="image-20230327094550917"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094612421.png" srcset="/img/loading.gif" lazyload alt="image-20230327094612421"></p>
 <h3 id="4-3-两种方式对比">4.3 两种方式对比</h3>
-<p><img src="./../../images/Redis%E5%81%9A%E7%BC%93%E5%AD%98/image-20230327094827113.png" srcset="/img/loading.gif" lazyload alt="image-20230327094827113"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094827113.png" srcset="/img/loading.gif" lazyload alt="image-20230327094827113"></p>
 <p>两种方法需要根据自己的业务需求去选择，</p>
 <p>在可用性和一致性之间做出选择</p>
 <h2 id="5-缓存封装工具">5.缓存封装工具</h2>
@@ -504,7 +504,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/02/Redis/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/" title="Redis基础">
+                      <a href="/2023/04/02/Redis/Redis%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" title="Redis基础">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Redis基础</span>
                         <span class="visible-mobile">上一篇</span>

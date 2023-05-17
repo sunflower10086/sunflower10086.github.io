@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="欢迎来到sunflower的博客">
 <meta property="og:description" content="视图的介绍和基本用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100523568.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100919396.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100721730.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318104157118.png">
 <meta property="article:published_time" content="2023-03-18T01:25:11.000Z">
-<meta property="article:modified_time" content="2023-03-18T08:18:54.797Z">
+<meta property="article:modified_time" content="2023-05-17T00:25:36.149Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sunflower10086.github.io/2023/03/18/images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100523568.png">
   
   
   
@@ -309,12 +309,12 @@
 </blockquote>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span>;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br>都可以成功插入<br>但是查询的时候看不见job这条数据<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
 <p>视图中的数据</p>
-<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100523568.png" srcset="/img/loading.gif" lazyload alt="image-20230318100523568"></p>
 <p>数据库中的数据(id不一样是因为我设置的id自增，在做测试的时候插入又删除了几条数据)</p>
-<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100919396.png" srcset="/img/loading.gif" lazyload alt="image-20230318100919396"></p>
 <p>如果创建视图的时候加上检查选项选项，那么不满足条件的插入会报错，不让插入</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> user_view_2 <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">USER</span> <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&lt;</span> <span class="hljs-number">20</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CASCADED</span> <span class="hljs-keyword">CHECK</span> OPTION;<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;tom&#x27;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> user_view_2 <span class="hljs-keyword">VALUE</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;job&#x27;</span>, <span class="hljs-number">30</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;男&#x27;</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_view_2;<br></code></pre></td></tr></table></figure>
-<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318100721730.png" srcset="/img/loading.gif" lazyload alt="image-20230318100721730"></p>
 <h3 id="基于视图创建视图">基于视图创建视图</h3>
 <h4 id="cascaded">cascaded</h4>
 <ul>
@@ -334,7 +334,7 @@
 <p class="note note-info">与cascaded基本相同，有一点本质的区别，local只会限制本视图，不会递归的给父视图加上限制条件</p>
 <h2 id="视图的更新">视图的更新</h2>
 <p>只有当视图中的行与基础表中的行一一对应的时候我们才能更新，只要包含下面任何一项都不能更新</p>
-<p><img src="./../../images/%E8%A7%86%E5%9B%BE/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230318104157118.png" srcset="/img/loading.gif" lazyload alt="视图更新条件"></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> user_count_view <span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> user_count_view <span class="hljs-keyword">values</span>(<span class="hljs-number">10</span>); # 此时会报错<br></code></pre></td></tr></table></figure>
 
                 

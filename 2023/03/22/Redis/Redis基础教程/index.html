@@ -23,21 +23,21 @@
 <meta property="og:site_name" content="欢迎来到sunflower的博客">
 <meta property="og:description" content="Redis的一些基础数据类型和使用方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324092332226.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093606033.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093758493.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093850446-1679621931983-1.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094008781.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094127605.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094223709.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094359836.png">
-<meta property="og:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324100539520.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324092332226.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093606033.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093758493.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093850446-1679621931983-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094008781.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094127605.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094223709.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094359836.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324100539520.png">
 <meta property="article:published_time" content="2023-03-22T00:41:12.852Z">
-<meta property="article:modified_time" content="2023-03-24T02:22:26.153Z">
+<meta property="article:modified_time" content="2023-05-17T00:28:03.480Z">
 <meta property="article:author" content="sunflower">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sunflower10086.github.io/2023/03/22/images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324092332226.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324092332226.png">
   
   
   
@@ -372,38 +372,38 @@
 </blockquote>
 <h2 id="5-Hash类型">5. Hash类型</h2>
 <p>Hash类型存储结构</p>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324092332226.png" srcset="/img/loading.gif" lazyload alt="image-20230324092332226"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324092332226.png" srcset="/img/loading.gif" lazyload alt="image-20230324092332226"></p>
 <h3 id="5-1-Hash常见命令">5.1 Hash常见命令</h3>
 <ul>
 <li><code>hset key field value</code>: 添加或修改hash类型key的field的值</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093606033.png" srcset="/img/loading.gif" lazyload alt="image-20230324093606033"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093606033.png" srcset="/img/loading.gif" lazyload alt="image-20230324093606033"></p>
 <ul>
 <li><code>hget key field</code>：获取一个hash类型key的field的值（例子同上）</li>
 <li><code>hmset</code>：批量添加多个hash类型的key的field的值</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093758493.png" srcset="/img/loading.gif" lazyload alt="image-20230324093758493"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093758493.png" srcset="/img/loading.gif" lazyload alt="image-20230324093758493"></p>
 <ul>
 <li><code>hmget</code>：批量获取多个hash类型key的field的值</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324093850446-1679621931983-1.png" srcset="/img/loading.gif" lazyload alt="image-20230324093850446"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324093850446-1679621931983-1.png" srcset="/img/loading.gif" lazyload alt="image-20230324093850446"></p>
 <ul>
 <li><code>hgetall</code>：获取一个hash类型中的key中的所有的field和value值</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094008781.png" srcset="/img/loading.gif" lazyload alt="image-20230324094008781"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094008781.png" srcset="/img/loading.gif" lazyload alt="image-20230324094008781"></p>
 <ul>
 <li><code>hkeys</code>：获取一个hash类型的key中的所有的field</li>
 <li><code>hvals</code>：获取一个hash类型的key中的所有的value</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094127605.png" srcset="/img/loading.gif" lazyload alt="image-20230324094127605"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094127605.png" srcset="/img/loading.gif" lazyload alt="image-20230324094127605"></p>
 <ul>
 <li><code>hincrby</code>：让一个hash类型key的字段值自增指定步长（自增就加正数，自减就加负数）</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094223709.png" srcset="/img/loading.gif" lazyload alt="image-20230324094223709"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094223709.png" srcset="/img/loading.gif" lazyload alt="image-20230324094223709"></p>
 <ul>
 <li><code>hsetnx</code>：添加一个hash类型的key的field值，前提是这个field不存在，否则不执行</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324094359836.png" srcset="/img/loading.gif" lazyload alt="image-20230324094359836"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324094359836.png" srcset="/img/loading.gif" lazyload alt="image-20230324094359836"></p>
 <h2 id="6-List类型">6. List类型</h2>
 <p>在redis中可以把List类型用作栈，队列，阻塞队列</p>
 <p>list命令以<code>l</code>开头代表在队列左侧执行，<code>r</code>开头代表在队列右侧执行</p>
@@ -449,7 +449,7 @@
 <li><code>sdiff key1 key2</code>：求key1与key2的差集</li>
 <li><code>sunion key1 key2</code>：求并集</li>
 </ul>
-<p><img src="./../../images/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/image-20230324100539520.png" srcset="/img/loading.gif" lazyload alt="image-20230324100539520"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230324100539520.png" srcset="/img/loading.gif" lazyload alt="image-20230324100539520"></p>
 <h2 id="8-SortedSet">8. SortedSet</h2>
 <p>SortedSet是一个可排序的Set集合，SortedSet中的每一个元素都带有一个score属性，可以基于score进行排序</p>
 <p>特点</p>

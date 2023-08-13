@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Redis做缓存 | 欢迎来到sunflower的博客</title><meta name="author" content="sunflower"><meta name="copyright" content="sunflower"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="讲解Redis做缓存的方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis做缓存">
+<meta property="og:url" content="https://sunflower10086.github.io/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:site_name" content="欢迎来到sunflower的博客">
+<meta property="og:description" content="讲解Redis做缓存的方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg">
+<meta property="article:published_time" content="2023-03-27T00:43:18.995Z">
+<meta property="article:modified_time" content="2023-07-27T13:56:14.921Z">
+<meta property="article:author" content="sunflower">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg"><link rel="shortcut icon" href="/img/author.jpg"><link rel="canonical" href="https://sunflower10086.github.io/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: sunflower","link":"链接: ","source":"来源: 欢迎来到sunflower的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Redis做缓存',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-27 21:56:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/cursor.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="欢迎来到sunflower的博客"><span class="site-name">欢迎来到sunflower的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Redis做缓存</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-27T00:43:18.995Z" title="发表于 2023-03-27 08:43:18">2023-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-27T13:56:14.921Z" title="更新于 2023-07-27 21:56:14">2023-07-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Redis/">Redis</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">947</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis做缓存"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>讲解Redis做缓存的方法</p>
+<span id="more"></span>
+<h2 id="1-缓存的更新策略">1.缓存的更新策略</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">内存淘汰</th>
+<th style="text-align:center">超时删除</th>
+<th style="text-align:center">主动更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">说明</td>
+<td style="text-align:center">不需要自己维护，利用Redis的内存淘汰机制，当内存不足时自动淘汰部分数据，下次查询时更新缓存</td>
+<td style="text-align:center">给缓存添加TTL，到期后自动删除缓存，下次查询时更新缓存</td>
+<td style="text-align:center">编写业务逻辑，再修改数据库的同时，更新缓存</td>
+</tr>
+<tr>
+<td style="text-align:center">一致性</td>
+<td style="text-align:center">差</td>
+<td style="text-align:center">一般</td>
+<td style="text-align:center">好</td>
+</tr>
+<tr>
+<td style="text-align:center">维护成本</td>
+<td style="text-align:center">无</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+</tr>
+</tbody>
+</table>
+<p>业务场景：</p>
+<ul>
+<li>低一致性需求：使用内存淘汰机制。例如店铺类型的查询缓存</li>
+<li>高一致性需求：主动更新，并以超市剔除作为兜底方案。例如店铺详情查询的缓存</li>
+</ul>
+<h3 id="主动更新策略">主动更新策略</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327085149035.png" alt="image-20230327085149035"></p>
+<p>一般使用第一种，需要我们自己编码</p>
+<h4 id="主动更新策略需要考虑三个问题">主动更新策略需要考虑三个问题</h4>
+<p>1.删除缓存还是更新缓存</p>
+<ul>
+<li>更新缓存：每次操作数据库都更新缓存，无效的写操作比较多</li>
+<li>删除缓存：更新数据时缓存失效，查询时在写入缓存</li>
+</ul>
+<p>2.如何保证缓存与数据库的操作同时成功或失败</p>
+<ul>
+<li>单机：写在一个事务里</li>
+<li>分布式：利用TCC等分布式事务方案</li>
+</ul>
+<p>3.先操作缓存还是先操作数据库</p>
+<ul>
+<li>先删除缓存，再操作数据库</li>
+<li>先操作数据库，在删除缓存（保证原子性，利用事务）</li>
+</ul>
+<p>两种方式都可能出现异常情况，但是先操作数据库再删缓存出现异常的概率较小</p>
+<h4 id="读操作">读操作</h4>
+<ul>
+<li>缓存未命中直接返回</li>
+<li>缓存未命中则查询数据库，并写入缓存，并设置超时时间</li>
+</ul>
+<h4 id="写操作">写操作</h4>
+<ul>
+<li>先操作数据库，在删除缓存</li>
+<li>保证数据库与缓存操作的原子性</li>
+</ul>
+<h2 id="2-缓存穿透">2.缓存穿透</h2>
+<p>指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会直接打到数据库</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327090734217.png" alt="image-20230327090734217"></p>
+<h3 id="常见的两种解决方案：">常见的两种解决方案：</h3>
+<ul>
+<li>
+<h4 id="缓存空对象：把空的值缓存到Redis">缓存空对象：把空的值缓存到Redis</h4>
+<ul>
+<li>优点：实现简单，维护方便</li>
+<li>缺点：
+<ul>
+<li>额外的内存消耗（设置一个TTL，过一段时间删除）</li>
+<li>可能造成短期的不一致</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327091118425.png" alt="image-20230327091118425"></p>
+<ul>
+<li>
+<h4 id="布隆过滤：一种算法（目前不了解）">布隆过滤：一种算法（目前不了解）</h4>
+<ul>
+<li>优点：内存占用少，没有多余key</li>
+<li>缺点：
+<ul>
+<li>实现复杂</li>
+<li>存在误判可能</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-缓存雪崩">3.缓存雪崩</h2>
+<p>在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来压力</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327092654100.png" alt="image-20230327092654100"></p>
+<p>解决方案：</p>
+<ul>
+<li>给不同的key的TTL添加随机值，随机加一到五分钟（解决大量的热Key同时过期）</li>
+<li>利用Redis集群提高服务的可用性（解决Redis宕机问题）</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<h2 id="4-缓存击穿">4.缓存击穿</h2>
+<p>也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且缓存<strong>重建业务比较复杂</strong>的Key突然失效了，无数的请求访问会在一瞬间给数据库带来巨大的冲击</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094241975.png" alt="image-20230327094241975"></p>
+<p>当有n个线程在重建的时候，我们的服务器就会有极大的压力，服务就撑不住</p>
+<p>两种解决方案：</p>
+<ul>
+<li>互斥锁</li>
+<li>逻辑过期</li>
+</ul>
+<h3 id="4-1-互斥锁">4.1 互斥锁</h3>
+<p>只有获取互斥锁的线程才可以重建缓存数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094436374.png" alt="image-20230327094436374"></p>
+<h3 id="4-2-逻辑过期">4.2 逻辑过期</h3>
+<p>在这个热Key的value中添加一个逻辑过期时间，而他的TTL是永不过期</p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094550917.png" alt="image-20230327094550917"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094612421.png" alt="image-20230327094612421"></p>
+<h3 id="4-3-两种方式对比">4.3 两种方式对比</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/sunflower10086/image-host/img/image-20230327094827113.png" alt="image-20230327094827113"></p>
+<p>两种方法需要根据自己的业务需求去选择，</p>
+<p>在可用性和一致性之间做出选择</p>
+<h2 id="5-缓存封装工具">5.缓存封装工具</h2>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io">sunflower</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/">https://sunflower10086.github.io/2023/03/27/Redis/Redis%E5%81%9A%E7%BC%93%E5%AD%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://sunflower10086.github.io/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sunflower10086.github.io" target="_blank">欢迎来到sunflower的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Redis/">Redis</a></div><div class="post_share"><div class="social-share" data-image="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/02/Redis/Redis%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" title="Redis基础"><img class="cover" src="https://www.toopic.cn/public/uploads/image/20200413/20200413213538_89197.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Redis基础</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/22/Redis/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" title="Redis基础"><img class="cover" src="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Redis基础</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/02/Redis/Redis%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" title="Redis基础"><img class="cover" src="https://www.toopic.cn/public/uploads/image/20200413/20200413213538_89197.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-02</div><div class="title">Redis基础</div></div></a></div><div><a href="/2023/03/22/Redis/Redis%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" title="Redis基础"><img class="cover" src="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-22</div><div class="title">Redis基础</div></div></a></div><div><a href="/2023/03/21/Redis/Redis%E5%85%A5%E9%97%A8/" title="Redis入门"><img class="cover" src="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-21</div><div class="title">Redis入门</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/author.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">sunflower</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sunflower10086"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sunflower10086" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客新成立</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BC%93%E5%AD%98%E7%9A%84%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">1.</span> <span class="toc-text">1.缓存的更新策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">1.1.</span> <span class="toc-text">主动更新策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">主动更新策略需要考虑三个问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text">读操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.3.</span> <span class="toc-text">写操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-number">2.</span> <span class="toc-text">2.缓存穿透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">常见的两种解决方案：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BA%E5%AF%B9%E8%B1%A1%EF%BC%9A%E6%8A%8A%E7%A9%BA%E7%9A%84%E5%80%BC%E7%BC%93%E5%AD%98%E5%88%B0Redis"><span class="toc-number">2.1.1.</span> <span class="toc-text">缓存空对象：把空的值缓存到Redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%AE%97%E6%B3%95%EF%BC%88%E7%9B%AE%E5%89%8D%E4%B8%8D%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">布隆过滤：一种算法（目前不了解）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-number">3.</span> <span class="toc-text">3.缓存雪崩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-number">4.</span> <span class="toc-text">4.缓存击穿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 互斥锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 逻辑过期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 两种方式对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%BC%93%E5%AD%98%E5%B0%81%E8%A3%85%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">5.缓存封装工具</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/13/Go/%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3goroutine/" title="深入理解goroutine">深入理解goroutine</a><time datetime="2023-08-13T07:06:48.388Z" title="发表于 2023-08-13 15:06:48">2023-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="RocketMQ的工作原理">RocketMQ的工作原理</a><time datetime="2023-08-03T07:05:59.375Z" title="发表于 2023-08-03 15:05:59">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/27/Redis/Redis%E9%9D%A2%E8%AF%95/" title="Redis基础">Redis基础</a><time datetime="2023-07-27T08:36:31.647Z" title="发表于 2023-07-27 16:36:31">2023-07-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/24/MySQL/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2023-07-24T08:53:12.945Z" title="发表于 2023-07-24 16:53:12">2023-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/http%E7%AF%87/" title="http常见面试题">http常见面试题</a><time datetime="2023-07-23T07:23:29.000Z" title="发表于 2023-07-23 15:23:29">2023-07-23</time></div></div></div></div></div></div></main><footer id="footer" style="background: white"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By sunflower</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    btf.addModeChange('mermaid', () => {
+      window.runMermaid()
+    })
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script async src="/js/title.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

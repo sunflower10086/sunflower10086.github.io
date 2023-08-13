@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>索引 | 欢迎来到sunflower的博客</title><meta name="author" content="sunflower"><meta name="copyright" content="sunflower"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MySQL的索引的介绍，用法，分类，使用规则，设计原则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="索引">
+<meta property="og:url" content="https://sunflower10086.github.io/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="欢迎来到sunflower的博客">
+<meta property="og:description" content="MySQL的索引的介绍，用法，分类，使用规则，设计原则">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg">
+<meta property="article:published_time" content="2023-03-16T00:47:29.705Z">
+<meta property="article:modified_time" content="2023-07-23T14:18:36.270Z">
+<meta property="article:author" content="sunflower">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg"><link rel="shortcut icon" href="/img/author.jpg"><link rel="canonical" href="https://sunflower10086.github.io/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: sunflower","link":"链接: ","source":"来源: 欢迎来到sunflower的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '索引',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-23 22:18:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/cursor.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="欢迎来到sunflower的博客"><span class="site-name">欢迎来到sunflower的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">索引</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-16T00:47:29.705Z" title="发表于 2023-03-16 08:47:29">2023-03-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-23T14:18:36.270Z" title="更新于 2023-07-23 22:18:36">2023-07-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/">MySQL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="索引"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>MySQL的索引的介绍，用法，分类，使用规则，设计原则</p>
+<span id="more"></span>
+<h2 id="索引的介绍-index">索引的介绍(index)</h2>
+<p>索引是帮助MySQL<strong>高效获取数</strong>的<code>数据结构(有序)</code></p>
+<h3 id="索引的优缺点">索引的优缺点</h3>
+<img src="https://pic.leetcode.cn/1678972542-NFPcGU-image-20230312211403026.png" style="zoom:70%;"/>
+<h2 id="索引的结构">索引的结构</h2>
+<ul>
+<li>B+Tree索引，最常见的索引类型，大部分引擎都支持B+书索引</li>
+<li>Hash索引，底层是哈希表，只能精确匹配不支持范围查询</li>
+<li>R-tree（空间索引），很少用</li>
+<li>Full-text（全文索引），很少用</li>
+</ul>
+<p>索引支持</p>
+<img src="https://pic.leetcode.cn/1678972546-gXoTeY-image-20230313102115108.png" alt="image-20230313102115108" style="zoom:70%;" />
+<ul>
+<li>
+<h3 id="B-Tree（多路平衡查找树）">B-Tree（多路平衡查找树）</h3>
+</li>
+<li>
+<h3 id="B-Tree">B+Tree</h3>
+</li>
+</ul>
+<blockquote>
+<p>所有的数据都会出现在叶子节点，叶子节点形成一个单向链表，其树形结构只负责索引</p>
+</blockquote>
+<p>原B+Tree</p>
+<img src="https://pic.leetcode.cn/1678972847-GlAMcP-image-20230313104227424.png" alt="image-20230313104227424" style="zoom:70%;" />
+<p>MySQL种对B+Tree的优化，使链表形成一个双向循环链表</p>
+<img src="https://pic.leetcode.cn/1678972550-JHAEGS-image-20230313104418596.png" alt="image-20230313104418596" style="zoom:70%;" />
+<ul>
+<li>
+<h3 id="Hash索引">Hash索引</h3>
+</li>
+</ul>
+<img src="https://pic.leetcode.cn/1678972553-uKszpw-image-20230313104950790.png" alt="image-20230313104950790" style="zoom:80%;" />
+<p>特点</p>
+<ul>
+<li>Hash索引只能用于等值查询，不支持范围查询</li>
+<li>无法利用索引完成排序操作</li>
+<li>效率高，比B+Tree树效率高</li>
+</ul>
+<p>在MySQL中，只有Memory引擎支持Hash索引，但是在InnoDB中有自适应hash功能，根据B+Tree索引自动构建的</p>
+<h2 id="索引的分类">索引的分类</h2>
+<h3 id="1-聚集索引">1.聚集索引</h3>
+<p><strong>必须有，而且只能有一个</strong></p>
+<blockquote>
+<p>将数据存储与索引放到了一块，索引结构的叶子节点保存了行数据</p>
+</blockquote>
+<p>选取规则：</p>
+<p>​	1.有主键，主键索引就是聚集索引</p>
+<p>​	2.没有主键，使用第一个唯一(UNIQUE)索引作为聚集索引</p>
+<p>​	3.都没有，则InnoDB会自动生成一个rowid作为隐藏的聚集索引</p>
+<h3 id="2-二级索引">2.二级索引</h3>
+<p><strong>可以存在多个</strong></p>
+<blockquote>
+<p>把数据与索引分开存储，索引结构的叶子节点关联的使对应的之后护肩</p>
+</blockquote>
+<h2 id="索引的语法">索引的语法</h2>
+<h3 id="创建索引">创建索引</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span> <span class="operator">|</span> fulltext] index index_name <span class="keyword">on</span> table_name_ (index_col_name)</span><br></pre></td></tr></table></figure>
+<h3 id="查看索引">查看索引</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> index <span class="keyword">from</span> table_name_</span><br></pre></td></tr></table></figure>
+<h3 id="删除索引">删除索引</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> index index_name <span class="keyword">on</span> table_name_</span><br></pre></td></tr></table></figure>
+<h2 id="索引性能">索引性能</h2>
+<h3 id="性能分析">性能分析</h3>
+<h4 id="查看执行频次">查看执行频次</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Com_______&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="慢查询日志">慢查询日志</h4>
+<h4 id="show-profiles查看sql语句消耗时间">show profiles查看sql语句消耗时间</h4>
+<p>查看是否支持profiling</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @<span class="variable">@have</span>_profiling;</span><br></pre></td></tr></table></figure>
+<p>开启profiling</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> profiling<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>查看sql消耗时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">-</span>查看每条<span class="keyword">sql</span>的耗时情况</span><br><span class="line"><span class="keyword">show</span> profiles;</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>查看指定query_id的<span class="keyword">sql</span>语句的各个阶段的耗时情况</span><br><span class="line"><span class="keyword">show</span> profile <span class="keyword">for</span> query query_id;</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>查看指定query_id的<span class="keyword">sql</span>语句的CPU使用情况</span><br><span class="line"><span class="keyword">show</span> profile cpu query query_id;</span><br></pre></td></tr></table></figure>
+<h4 id="explan查看sql语句的详细信息">explan查看sql语句的详细信息</h4>
+<h2 id="索引的使用规则">索引的使用规则</h2>
+<h3 id="1-最左前缀法则">1.最左前缀法则</h3>
+<blockquote>
+<p>如果索引使用了多列（联合索引），要遵守最左前缀法则</p>
+<p>查询从索引的最左列开始，中间不能跳跃某列，如果跳跃某一列，索引将部分失效（后面字段大的呃索引失效）<strong>和where中条件的顺序无关</strong></p>
+</blockquote>
+<h3 id="2-范围查询">2.范围查询</h3>
+<blockquote>
+<p>联合查询中，使用了（&gt;, &lt;）则之后列的索引失效（&gt;=, &lt;=不失效）</p>
+</blockquote>
+<h3 id="3-索引列运算">3.索引列运算</h3>
+<blockquote>
+<p>不要再索引列上进行运算操作，索引将失效</p>
+</blockquote>
+<h3 id="4-字符传不加引号">4.字符传不加引号</h3>
+<blockquote>
+<p>字符传类型字段使用使，不加引号，索引会失效</p>
+</blockquote>
+<h3 id="5-模糊查询">5.模糊查询</h3>
+<blockquote>
+<p>如果仅仅使尾部模糊匹配，索引不会失效，如果是头部模糊匹配，索引失效</p>
+</blockquote>
+<h3 id="6-or连接的条件">6.or连接的条件</h3>
+<blockquote>
+<p>用or分割开的条件，如果前面的条件有索引，后面没有，那么涉及到大的索引都会失效（只有都有索引，索引才会生效）</p>
+</blockquote>
+<h3 id="7-数据分布影响">7.数据分布影响</h3>
+<blockquote>
+<p>如果MySQL评估使用索引比全表更慢，则不使用索引</p>
+</blockquote>
+<h3 id="8-SQL提示">8.SQL提示</h3>
+<blockquote>
+<p>是优化数据库的一个重要手段，就是在SQL语句中加入一些人为的提示来达到优化操作的目的</p>
+</blockquote>
+<ul>
+<li>
+<p>use index(用哪个索引, 不一定用)</p>
+</li>
+<li>
+<p>ignore index（不用哪个索引）</p>
+</li>
+<li>
+<p>force index（必须使用这个索引，一定用）</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> table_name use <span class="operator">||</span> ignore <span class="operator">||</span> force index(index_name) where...</span><br></pre></td></tr></table></figure>
+<h3 id="9-覆盖索引">9.覆盖索引</h3>
+<blockquote>
+<p>尽量使用覆盖索引（查询使用了索引，并且需要返回的列，在该索引中已经全部能够全部找到），减少select*</p>
+</blockquote>
+<p>如果select之后的字段没有索引，且where条件中不包含该字段，那么就会触发回表查询，回表查询会慢</p>
+<h3 id="10-前缀索引">10.前缀索引</h3>
+<blockquote>
+<p>当字段类型为字符串（varchar，text等）时，有时候需要索引很大的字符串，这会让索引变得很大，查询时，浪费磁盘I/O,影响查询效率。这时值将字符串一部分前缀建立索引，大大节约索引空间，提高索引效率</p>
+</blockquote>
+<h4 id="语法">语法</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index idx_××× <span class="keyword">on</span> table_name(cloumn(n));</span><br></pre></td></tr></table></figure>
+<h4 id="最长前缀匹配">最长前缀匹配</h4>
+<p>所有重复的值与总数的比值，最好是1，此时索引性能是最好的</p>
+<h3 id="11-单列索引和联合索引">11.单列索引和联合索引</h3>
+<p>单列索引：一个索引只包含单个列</p>
+<p>联合索引：一个索引包含了多个列</p>
+<p>在业务场景中，如果存在多个查询条件，考虑针对查询字段建立索引，推荐联合索引（不用回表查询，速度快）</p>
+<h2 id="索引设计原则">索引设计原则</h2>
+<p><img src="https://pic.leetcode.cn/1678972980-aPKjQH-image-20230316210549569.png" alt="image-20230316210549569"></p>
+<p>1.数据超过100万</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io">sunflower</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/">https://sunflower10086.github.io/2023/03/16/MySQL/%E7%B4%A2%E5%BC%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://sunflower10086.github.io/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sunflower10086.github.io" target="_blank">欢迎来到sunflower的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="https://www.toopic.cn/public/uploads/image/20200413/20200413215650_67634.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/17/MySQL/SQL%E4%BC%98%E5%8C%96/" title="SQL优化"><img class="cover" src="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL优化</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/16/MySQL/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="存储引擎"><img class="cover" src="https://www.toopic.cn/public/uploads/small/1642749399720164274939972.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">存储引擎</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/05/30/MySQL/InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="InnoDB存储引擎"><img class="cover" src="https://www.toopic.cn/public/uploads/image/20200413/20200413213538_89197.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="title">InnoDB存储引擎</div></div></a></div><div><a href="/2023/03/16/MySQL/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="存储引擎"><img class="cover" src="https://www.toopic.cn/public/uploads/small/1642749399720164274939972.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-16</div><div class="title">存储引擎</div></div></a></div><div><a href="/2023/03/17/MySQL/SQL%E4%BC%98%E5%8C%96/" title="SQL优化"><img class="cover" src="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-17</div><div class="title">SQL优化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/author.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">sunflower</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sunflower10086"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sunflower10086" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客新成立</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BB%8B%E7%BB%8D-index"><span class="toc-number">1.</span> <span class="toc-text">索引的介绍(index)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">索引的优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">索引的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Tree%EF%BC%88%E5%A4%9A%E8%B7%AF%E5%B9%B3%E8%A1%A1%E6%9F%A5%E6%89%BE%E6%A0%91%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">B-Tree（多路平衡查找树）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Tree"><span class="toc-number">2.2.</span> <span class="toc-text">B+Tree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash%E7%B4%A2%E5%BC%95"><span class="toc-number">2.3.</span> <span class="toc-text">Hash索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">索引的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95"><span class="toc-number">3.1.</span> <span class="toc-text">1.聚集索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.</span> <span class="toc-text">2.二级索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">索引的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="toc-number">4.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95"><span class="toc-number">4.2.</span> <span class="toc-text">查看索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="toc-number">4.3.</span> <span class="toc-text">删除索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%80%A7%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text">索引性能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%A7%E8%A1%8C%E9%A2%91%E6%AC%A1"><span class="toc-number">5.1.1.</span> <span class="toc-text">查看执行频次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="toc-number">5.1.2.</span> <span class="toc-text">慢查询日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#show-profiles%E6%9F%A5%E7%9C%8Bsql%E8%AF%AD%E5%8F%A5%E6%B6%88%E8%80%97%E6%97%B6%E9%97%B4"><span class="toc-number">5.1.3.</span> <span class="toc-text">show profiles查看sql语句消耗时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#explan%E6%9F%A5%E7%9C%8Bsql%E8%AF%AD%E5%8F%A5%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="toc-number">5.1.4.</span> <span class="toc-text">explan查看sql语句的详细信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99"><span class="toc-number">6.</span> <span class="toc-text">索引的使用规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E6%B3%95%E5%88%99"><span class="toc-number">6.1.</span> <span class="toc-text">1.最左前缀法则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">2.范围查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%B4%A2%E5%BC%95%E5%88%97%E8%BF%90%E7%AE%97"><span class="toc-number">6.3.</span> <span class="toc-text">3.索引列运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%AD%97%E7%AC%A6%E4%BC%A0%E4%B8%8D%E5%8A%A0%E5%BC%95%E5%8F%B7"><span class="toc-number">6.4.</span> <span class="toc-text">4.字符传不加引号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.5.</span> <span class="toc-text">5.模糊查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-or%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">6.6.</span> <span class="toc-text">6.or连接的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E5%BD%B1%E5%93%8D"><span class="toc-number">6.7.</span> <span class="toc-text">7.数据分布影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-SQL%E6%8F%90%E7%A4%BA"><span class="toc-number">6.8.</span> <span class="toc-text">8.SQL提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95"><span class="toc-number">6.9.</span> <span class="toc-text">9.覆盖索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-number">6.10.</span> <span class="toc-text">10.前缀索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">6.10.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%89%8D%E7%BC%80%E5%8C%B9%E9%85%8D"><span class="toc-number">6.10.2.</span> <span class="toc-text">最长前缀匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E5%8D%95%E5%88%97%E7%B4%A2%E5%BC%95%E5%92%8C%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">6.11.</span> <span class="toc-text">11.单列索引和联合索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">7.</span> <span class="toc-text">索引设计原则</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/13/Go/%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3goroutine/" title="深入理解goroutine">深入理解goroutine</a><time datetime="2023-08-13T07:06:48.388Z" title="发表于 2023-08-13 15:06:48">2023-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="RocketMQ的工作原理">RocketMQ的工作原理</a><time datetime="2023-08-03T07:05:59.375Z" title="发表于 2023-08-03 15:05:59">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/27/Redis/Redis%E9%9D%A2%E8%AF%95/" title="Redis基础">Redis基础</a><time datetime="2023-07-27T08:36:31.647Z" title="发表于 2023-07-27 16:36:31">2023-07-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/24/MySQL/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2023-07-24T08:53:12.945Z" title="发表于 2023-07-24 16:53:12">2023-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/http%E7%AF%87/" title="http常见面试题">http常见面试题</a><time datetime="2023-07-23T07:23:29.000Z" title="发表于 2023-07-23 15:23:29">2023-07-23</time></div></div></div></div></div></div></main><footer id="footer" style="background: white"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By sunflower</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    btf.addModeChange('mermaid', () => {
+      window.runMermaid()
+    })
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script async src="/js/title.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

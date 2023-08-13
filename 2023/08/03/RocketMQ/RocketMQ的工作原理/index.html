@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RocketMQ的工作原理 | 欢迎来到sunflower的博客</title><meta name="author" content="sunflower"><meta name="copyright" content="sunflower"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、消息的生产 1 消息的生产过程 Producer可以将消息写入到某Broker中的某Queue中，其经历了如下过程：  Producer发送消息之前，会先向NameServer发出获取消息Topic的路由信息的请求 NameServer返回该Topic的路由表及Broker列表 Producer根据代码中指定的Queue选择策略，从Queue列表中选出一个队列，用于后续存储消息 Produer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RocketMQ的工作原理">
+<meta property="og:url" content="https://sunflower10086.github.io/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="欢迎来到sunflower的博客">
+<meta property="og:description" content="一、消息的生产 1 消息的生产过程 Producer可以将消息写入到某Broker中的某Queue中，其经历了如下过程：  Producer发送消息之前，会先向NameServer发出获取消息Topic的路由信息的请求 NameServer返回该Topic的路由表及Broker列表 Producer根据代码中指定的Queue选择策略，从Queue列表中选出一个队列，用于后续存储消息 Produer">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg">
+<meta property="article:published_time" content="2023-08-03T07:05:59.375Z">
+<meta property="article:modified_time" content="2023-08-05T06:48:56.434Z">
+<meta property="article:author" content="sunflower">
+<meta property="article:tag" content="消息队列">
+<meta property="article:tag" content="RocketMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg"><link rel="shortcut icon" href="/img/author.jpg"><link rel="canonical" href="https://sunflower10086.github.io/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: sunflower","link":"链接: ","source":"来源: 欢迎来到sunflower的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RocketMQ的工作原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-05 14:48:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/cursor.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="欢迎来到sunflower的博客"><span class="site-name">欢迎来到sunflower的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RocketMQ的工作原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-03T07:05:59.375Z" title="发表于 2023-08-03 15:05:59">2023-08-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-05T06:48:56.434Z" title="更新于 2023-08-05 14:48:56">2023-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RocketMQ的工作原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>一、消息的生产</h1>
+<h2 id="1-消息的生产过程">1 消息的生产过程</h2>
+<p>Producer可以将消息写入到某Broker中的某Queue中，其经历了如下过程：</p>
+<ol>
+<li>Producer发送消息之前，会先向NameServer发出获取消息Topic的路由信息的请求</li>
+<li>NameServer返回该Topic的路由表及Broker列表</li>
+<li>Producer根据代码中指定的Queue选择策略，从Queue列表中选出一个队列，用于后续存储消息</li>
+<li>Produer对消息做一些特殊处理，例如，消息本身超过4M，则会对其进行压缩</li>
+<li>Producer向选择出的Queue所在的Broker发出RPC请求，将消息发送到选择出的Queue</li>
+</ol>
+<blockquote>
+<p>路由表：实际是一个Map，key为Topic名称，value是一个QueueData实例列表。QueueData并不是一个Queue对应一个QueueData，而是一个Broker中该Topic的所有Queue对应一个QueueData。即，只要涉及到该Topic的Broker，一个Broker对应一个QueueData。QueueData中包含brokerName。简单来说，路由表的key为Topic名称，value则为所有涉及该Topic的BrokerName列表。</p>
+</blockquote>
+<blockquote>
+<p>Broker列表：其实际也是一个Map。key为brokerName，value为BrokerData。一个Broker对应一个BrokerData实例，对吗？不对。一套brokerName名称相同的Master-Slave小集群对应一个BrokerData。BrokerData中包含brokerName及一个map。该map的key为brokerId，value为该broker对应的地址。brokerId为 0 表示该broker为Master，非 0 表示Slave。</p>
+</blockquote>
+<h2 id="2-Queue选择算法">2.Queue选择算法</h2>
+<p>对于无序消息消息，其queue选择算法，也称消息投递算法，常见的有两种：</p>
+<h3 id="轮询算法">轮询算法</h3>
+<p>默认选择算法，保证每个Queue中可以均衡的收到消息。</p>
+<blockquote>
+<p>该算法的问题：由于某些原因，在某些Broker上的Queue可能存在投递延迟比较严重。从而导致Producer中的缓存队列中出现较大的消息积压，影响消息的投递性能</p>
+</blockquote>
+<h3 id="最小延迟投递算法">最小延迟投递算法</h3>
+<p>该算法会统计每次消息投递的时间延迟，然后根据统计出的结果将消息投递到时间延迟最小的Queue。如果延迟相同，则采用轮询算法投递。该算法可以有效提升消息的投递性能。</p>
+<blockquote>
+<p>该算法也存在一个问题：消息在Queue上的分配不均匀。投递延迟小的Queue其可能会存在大量的消息。而对该Queue的消费者压力会增大，降低消息的消费能力，可能会导致MQ中消息的堆积。</p>
+</blockquote>
+<h1>二、消息的存储</h1>
+<p>RocketMQ中的消息存储在本地文件系统中，这些相关文件默认在当前用户主目录下的store目录中。</p>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208133814.png" alt="输入图片说明"></p>
+<ul>
+<li>abort：该文件在Broker启动后会自动创建，正常关闭Broker，该文件会自动消失。若在没有启动Broker的情况下，发现这个文件是存在的，则说明之前Broker的关闭是非正常关闭。</li>
+<li>checkpoint：其中存储着commitlog、consumequeue、index文件的最后刷盘时间戳</li>
+<li>commitlog：其中存放着commitlog文件，而消息是写在commitlog文件中的</li>
+<li>conæg：存放着Broker运行期间的一些配置数据</li>
+<li>consumequeue：其中存放着consumequeue文件，队列就存放在这个目录中</li>
+<li>index：其中存放着消息索引文件indexFile</li>
+<li>lock：运行期间使用到的全局资源锁</li>
+</ul>
+<h2 id="1-commitlog文件">1.commitlog文件</h2>
+<blockquote>
+<p>说明：在很多资料中commitlog目录中的文件简单就称为commitlog文件。但在源码中，该文件被命名为mappedFile。</p>
+</blockquote>
+<h4 id="目录与文件"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6">目录与文件</a></h4>
+<p>commitlog目录中存放着很多的mappedFile文件，当前Broker中的所有消息都是落盘到这些mappedFile文件中的。mappedFile文件大小为1G（小于等于1G），文件名由 20 位十进制数构成，表示当前文件的第一条消息的起始位移偏移量。</p>
+<blockquote>
+<p>第一个文件名一定是 20 位 0 构成的。因为第一个文件的第一条消息的偏移量commitlog offset为 0</p>
+<p>当第一个文件放满时，则会自动生成第二个文件继续存放消息。假设第一个文件大小是 1073741820 字节（1G = 1073741824字节），则第二个文件名就是 00000000001073741824 。</p>
+<p>以此类推，第n个文件名应该是前n-1个文件大小之和。</p>
+<p>一个Broker中所有mappedFile文件的commitlog offset是连续的</p>
+</blockquote>
+<p>需要注意的是，一个Broker中仅包含一个commitlog目录，所有的mappedFile文件都是存放在该目录中的。即无论当前Broker中存放着多少Topic的消息，这些消息都是被顺序写入到了mappedFile文件中的。也就是说，这些消息在Broker中存放时并没有被按照Topic进行分类存放。</p>
+<blockquote>
+<p>mappedFile文件是顺序读写的文件，所有其访问效率很高</p>
+<p>无论是SSD磁盘还是SATA磁盘，通常情况下，顺序存取效率都会高于随机存取。</p>
+</blockquote>
+<h4 id="消息单元"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E6%B6%88%E6%81%AF%E5%8D%95%E5%85%83">消息单元</a></h4>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208134157.png" alt="输入图片说明"></p>
+<p>mappedFile文件内容由一个个的<code>消息单元</code>构成。每个消息单元中包含消息总长度MsgLen、消息的物理位置physicalOffset、消息体内容Body、消息体长度BodyLength、消息主题Topic、Topic长度 TopicLength、消息生产者BornHost、消息发送时间戳BornTimestamp、消息所在的队列QueueId、消息在Queue中存储的偏移量QueueOffset等近 20 余项消息相关属性。</p>
+<blockquote>
+<p>需要注意到，消息单元中是包含Queue相关属 性的。所以，我们在后续的学习中，就需要十分留意commitlog与queue间的关系是什么？</p>
+<p>一个mappedFile文件中第m+1个消息单元的commitlog offset偏移量</p>
+<p>L(m+1) = L(m) + MsgLen(m) (m &gt;= 0)</p>
+</blockquote>
+<h2 id="2-consumequeue">2 consumequeue</h2>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208134355.png" alt="输入图片说明"></p>
+<h4 id="目录与文件-2"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6-1">目录与文件</a></h4>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208134415.png" alt="输入图片说明"></p>
+<p>为了提高效率，会为每个Topic在~/store/consumequeue中创建一个目录，目录名为Topic名称。在该Topic目录下，会再为每个该Topic的Queue建立一个目录，目录名为queueId。每个目录中存放着若干consumequeue文件，consumequeue文件是commitlog的索引文件，可以根据consumequeue定位到具体的消息。</p>
+<p>consumequeue文件名也由 20 位数字构成，表示当前文件的第一个索引条目的起始位移偏移量。与mappedFile文件名不同的是，其后续文件名是固定的。因为consumequeue文件大小是固定不变的。</p>
+<h4 id="索引条目"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E7%B4%A2%E5%BC%95%E6%9D%A1%E7%9B%AE">索引条目</a></h4>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208134454.png" alt="输入图片说明"></p>
+<p>每个consumequeue文件可以包含30w个索引条目，每个索引条目包含了三个消息重要属性：消息在mappedFile文件中的偏移量CommitLog Offset、消息长度、消息Tag的hashcode值。这三个属性占 20个字节，所以每个文件的大小是固定的30w * 20字节。</p>
+<blockquote>
+<p>一个consumequeue文件中所有消息的Topic一定是相同的。但每条消息的Tag可能是不同的。</p>
+</blockquote>
+<h3 id="3-对文件的读写"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=_3-%E5%AF%B9%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99">3 对文件的读写</a></h3>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208134538.png" alt="输入图片说明"></p>
+<h4 id="消息写入"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E6%B6%88%E6%81%AF%E5%86%99%E5%85%A5">消息写入</a></h4>
+<p>一条消息进入到Broker后经历了以下几个过程才最终被持久化。</p>
+<ul>
+<li>Broker根据queueId，获取到该消息对应索引条目要在consumequeue目录中的写入偏移量，即QueueOffset</li>
+<li>将queueId、queueOffset等数据，与消息一起封装为消息单元</li>
+<li>将消息单元写入到commitlog</li>
+<li>同时，形成消息索引条目</li>
+<li>将消息索引条目分发到相应的consumequeue</li>
+</ul>
+<h4 id="消息拉取"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E6%B6%88%E6%81%AF%E6%8B%89%E5%8F%96">消息拉取</a></h4>
+<ul>
+<li>
+<p>当Consumer来拉取消息时会经历以下几个步骤：</p>
+<ul>
+<li>
+<p>Consumer获取到其要消费消息所在Queue的消费偏移量offset，计算出其要消费消息的消息offset</p>
+<blockquote>
+<p>消费offset即消费进度，consumer对某个Queue的消费offset，即消费到了该Queue的第几条消息<br>
+消息offset = 消费offset + 1</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>Consumer向Broker发送拉取请求，其中会包含其要拉取消息的Queue、消息offset及消息Tag。</p>
+</li>
+<li>
+<p>Broker计算在该consumequeue中的queueOffset。</p>
+<blockquote>
+<p>queueOffset = 消息offset * 20字节</p>
+</blockquote>
+</li>
+<li>
+<p>从该queueOffset处开始向后查找第一个指定Tag的索引条目。</p>
+</li>
+<li>
+<p>解析该索引条目的前 8 个字节，即可定位到该消息在commitlog中的commitlog offset</p>
+</li>
+<li>
+<p>从对应commitlog offset中读取消息单元，并发送给Consumer</p>
+</li>
+</ul>
+<h4 id="性能提升"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=%E6%80%A7%E8%83%BD%E6%8F%90%E5%8D%87">性能提升</a></h4>
+<p>RocketMQ中，无论是消息本身还是消息索引，都是存储在磁盘上的。其不会影响消息的消费吗？当然不会。其实RocketMQ的性能在目前的MQ产品中性能是非常高的。因为系统通过一系列相关机制大大提升了性能。</p>
+<p>首先，RocketMQ对文件的读写操作是通过<code>mmap零拷贝</code>进行的，将对文件的操作转化为直接对内存地址进行操作，从而极大地提高了文件的读写效率。</p>
+<p>其次，consumequeue中的数据是顺序存放的，还引入了<code>PageCache的预读取机制</code>，使得对consumequeue文件的读取几乎接近于内存读取，即使在有消息堆积情况下也不会影响性能。</p>
+<blockquote>
+<p>PageCache机制，页缓存机制，是OS对文件的缓存机制，用于加速对文件的读写操作。一般来说，程序对文件进行顺序读写的速度几乎接近于内存读写速度，主要原因是由于OS使用PageCache机制对读写访问操作进行性能优化，将一部分的内存用作PageCache。</p>
+<p>1)写操作：OS会先将数据写入到PageCache中，随后会以异步方式由pdæush（page dirty æush)内核线程将Cache中的数据刷盘到物理磁盘<br>
+2)读操作：若用户要读取数据，其首先会从PageCache中读取，若没有命中，则OS在从物理磁盘上加载该数据到PageCache的同时，也会顺序 对其相邻数据块中的数据进行预读取。</p>
+</blockquote>
+<p>RocketMQ中可能会影响性能的是对commitlog文件的读取。因为对commitlog文件来说，读取消息时会产生大量的随机访问，而随机访问会严重影响性能。不过，如果选择合适的系统IO调度算法，比如设置调度算法为Deadline（采用SSD固态硬盘的话），随机读的性能也会有所提升。</p>
+<h3 id="4-与Kafka的对比"><a target="_blank" rel="noopener" href="https://bright-boy.gitee.io/technical-notes/#/rocketmq/index?id=_4-%E4%B8%8Ekafka%E7%9A%84%E5%AF%B9%E6%AF%94">4 与Kafka的对比</a></h3>
+<p>RocketMQ的很多思想来源于Kafka，其中commitlog与consumequeue就是。</p>
+<p>RocketMQ中的commitlog目录与consumequeue的结合就类似于Kafka中的partition分区目录。mappedFile文件就类似于Kafka中的segment段。</p>
+<blockquote>
+<p>Kafka中的Topic的消息被分割为一个或多个partition。partition是一个物理概念，对应到系统上就是topic目录下的一个或多个目录。每个partition中包含的文件称为segment，是具体存放消息的文件。</p>
+<p>Kafka中消息存放的目录结构是：topic目录下有partition目录，partition目录下有segment文件</p>
+<p>Kafka中没有二级分类标签Tag这个概念</p>
+<p>Kafka中无需索引文件。因为生产者是将消息直接写在了partition中的，消费者也是直接从partition中读取数据的</p>
+</blockquote>
+<h1>三、indexFile</h1>
+<p>除了通过通常的指定Topic进行消息消费外，RocketMQ还提供了根据key进行消息查询的功能。该查询是通过store目录中的index子目录中的indexFile进行索引实现的快速查询。当然，这个indexFile中的索引数据是在<code>包含了key的消息</code>被发送到Broker时写入的。如果消息中没有包含key，则不会写入。</p>
+<h2 id="1-索引条目结构">1 索引条目结构</h2>
+<p>每个Broker中会包含一组indexFile，每个indexFile都是以一个<code>时间戳</code>命名的（这个indexFile被创建时的时间戳）。每个indexFile文件由三部分构成：indexHeader，slots槽位，indexes索引数据。每个 indexFile文件中包含500w个slot槽。而每个slot槽又可能会挂载很多的index索引单元。</p>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208135939.png" alt="输入图片说明"></p>
+<p>indexHeader固定 40 个字节，其中存放着如下数据：</p>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208135949.png" alt="输入图片说明"></p>
+<ul>
+<li>beginTimestamp：该indexFile中第一条消息的存储时间</li>
+<li>endTimestamp：该indexFile中最后一条消息存储时间</li>
+<li>beginPhyoffset：该indexFile中第一条消息在commitlog中的偏移量commitlog offset</li>
+<li>endPhyoffset：该indexFile中最后一条消息在commitlog中的偏移量commitlog offset</li>
+<li>hashSlotCount：已经填充有index的slot数量（并不是每个slot槽下都挂载有index索引单元，这里统计的是所有挂载了index索引单元的slot槽的数量）</li>
+<li>indexCount：该indexFile中包含的索引单元个数（统计出当前indexFile中所有slot槽下挂载的所有index索引单元的数量之和）</li>
+</ul>
+<p>indexFile中最复杂的是Slots与Indexes间的关系。在实际存储时，Indexes是在Slots后面的，但为了便于理解，将它们的关系展示为如下形式：</p>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208140054.png" alt="输入图片说明"></p>
+<p><code>key的hash值 % 500w</code>的结果即为slot槽位，然后将该slot值修改为该index索引单元的indexNo，根据这个indexNo可以计算出该index单元在indexFile中的位置。不过，该取模结果的重复率是很高的，为了解决该问题，在每个index索引单元中增加了preIndexNo，用于指定该slot中当前index索引单元的前一个index索引单元。而slot中始终存放的是其下最新的index索引单元的indexNo，这样的话，只要找到了slot就可以找到其最新的index索引单元，而通过这个index索引单元就可以找到其之前的所有index索引单元。</p>
+<blockquote>
+<p>indexNo是一个在indexFile中的流水号，从 0 开始依次递增。即在一个indexFile中所有indexNo是以此递增的。indexNo在index索引单元中是没有体现的，其是通过indexes中依次数出来的。</p>
+</blockquote>
+<p>index索引单元默写 20 个字节，其中存放着以下四个属性：</p>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208140159.png" alt="输入图片说明"></p>
+<ul>
+<li>keyHash：消息中指定的业务key的hash值</li>
+<li>phyOffset：当前key对应的消息在commitlog中的偏移量commitlog offset</li>
+<li>timeDiff：当前key对应消息的存储时间与当前indexFile创建时间的时间差</li>
+<li>preIndexNo：当前slot下当前index索引单元的前一个index索引单元的indexNo</li>
+</ul>
+<h2 id="2-indexFile的创建">2 indexFile的创建</h2>
+<p>indexFile的文件名为当前文件被创建时的时间戳。这个时间戳有什么用处呢？</p>
+<p>根据业务key进行查询时，查询条件除了key之外，还需要指定一个要查询的时间戳，表示要查询不大于该时间戳的最新的消息，即查询指定时间戳之前存储的最新消息。这个时间戳文件名可以简化查询，提高查询效率。具体后面会详细讲解。</p>
+<p>indexFile文件是何时创建的？其创建的条件（时机）有两个：</p>
+<ul>
+<li>当第一条带key的消息发送来后，系统发现没有indexFile，此时会创建第一个indexFile文件</li>
+<li>当一个indexFile中挂载的index索引单元数量超出2000w个时，会创建新的indexFile。当带key的消息发送到来后，系统会找到最新的indexFile，并从其indexHeader的最后 4 字节中读取到indexCount。若indexCount &gt;= 2000w时，会创建新的indexFile。</li>
+</ul>
+<blockquote>
+<p>由于可以推算出，一个indexFile的最大大小是：(40 + 500w * 4 + 2000w * 20)字节</p>
+</blockquote>
+<h2 id="3-查询流程">3 查询流程</h2>
+<p>当消费者通过业务key来查询相应的消息时，其需要经过一个相对较复杂的查询流程。不过，在分析查询流程之前，首先要清楚几个定位计算式子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">计算指定消息key的slot槽位序号：</span><br><span class="line">slot槽位序号 = key的hash % 500w (式子1)Copy to clipboardErrorCopied</span><br><span class="line">计算槽位序号为n的slot在indexFile中的起始位置：</span><br><span class="line">slot(n)位置 = 40 + (n - 1) * 4 (式子2)Copy to clipboardErrorCopied</span><br><span class="line">计算indexNo为m的index在indexFile中的位置：</span><br><span class="line">index(m)位置 = 40 + 500w * 4 + (m - 1) * 20 (式子3)Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>40 为indexFile中indexHeader的字节数<br>
+500w * 4 是所有slots所占的字节数</p>
+</blockquote>
+<h3 id="具体查询流程如下：">具体查询流程如下：</h3>
+<p><img src="https://bright-boy.gitee.io/technical-notes/rocketmq/images/QQ%E6%88%AA%E5%9B%BE20220208140740.png" alt="输入图片说明"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io">sunflower</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sunflower10086.github.io/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">https://sunflower10086.github.io/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://sunflower10086.github.io/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sunflower10086.github.io" target="_blank">欢迎来到sunflower的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a><a class="post-meta__tags" href="/tags/RocketMQ/">RocketMQ</a></div><div class="post_share"><div class="social-share" data-image="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/13/Go/%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3goroutine/" title="深入理解goroutine"><img class="cover" src="https://pic2.zhimg.com/v2-696b347aa5b02a943706d5de13dc6ec1_r.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解goroutine</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/27/Redis/Redis%E9%9D%A2%E8%AF%95/" title="Redis基础"><img class="cover" src="https://www.toopic.cn/public/uploads/small/1642749399720164274939972.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Redis基础</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/06/03/RocketMQ/RocketMQ%E7%9A%84%E7%AE%80%E4%BB%8B/" title="RocketMQ概述"><img class="cover" src="https://www.toopic.cn/public/uploads/small/1642749399720164274939972.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-03</div><div class="title">RocketMQ概述</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/author.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">sunflower</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sunflower10086"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/sunflower10086" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客新成立</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">一、消息的生产</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%B6%88%E6%81%AF%E7%9A%84%E7%94%9F%E4%BA%A7%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1 消息的生产过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Queue%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">2.Queue选择算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">轮询算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%BB%B6%E8%BF%9F%E6%8A%95%E9%80%92%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">最小延迟投递算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">二、消息的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-commitlog%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1.commitlog文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">目录与文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E5%8D%95%E5%85%83"><span class="toc-number">2.1.0.2.</span> <span class="toc-text">消息单元</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-consumequeue"><span class="toc-number">2.2.</span> <span class="toc-text">2 consumequeue</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6-2"><span class="toc-number">2.2.0.1.</span> <span class="toc-text">目录与文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%9D%A1%E7%9B%AE"><span class="toc-number">2.2.0.2.</span> <span class="toc-text">索引条目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AF%B9%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99"><span class="toc-number">2.2.1.</span> <span class="toc-text">3 对文件的读写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E5%86%99%E5%85%A5"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">消息写入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E6%8B%89%E5%8F%96"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">消息拉取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%8F%90%E5%8D%87"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">性能提升</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%8EKafka%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">2.2.2.</span> <span class="toc-text">4 与Kafka的对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">三、indexFile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B4%A2%E5%BC%95%E6%9D%A1%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">1 索引条目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-indexFile%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">3.2.</span> <span class="toc-text">2 indexFile的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B"><span class="toc-number">3.3.</span> <span class="toc-text">3 查询流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">3.3.1.</span> <span class="toc-text">具体查询流程如下：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/13/Go/%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3goroutine/" title="深入理解goroutine">深入理解goroutine</a><time datetime="2023-08-13T07:06:48.388Z" title="发表于 2023-08-13 15:06:48">2023-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/RocketMQ/RocketMQ%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="RocketMQ的工作原理">RocketMQ的工作原理</a><time datetime="2023-08-03T07:05:59.375Z" title="发表于 2023-08-03 15:05:59">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/27/Redis/Redis%E9%9D%A2%E8%AF%95/" title="Redis基础">Redis基础</a><time datetime="2023-07-27T08:36:31.647Z" title="发表于 2023-07-27 16:36:31">2023-07-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/24/MySQL/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2023-07-24T08:53:12.945Z" title="发表于 2023-07-24 16:53:12">2023-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/http%E7%AF%87/" title="http常见面试题">http常见面试题</a><time datetime="2023-07-23T07:23:29.000Z" title="发表于 2023-07-23 15:23:29">2023-07-23</time></div></div></div></div></div></div></main><footer id="footer" style="background: white"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By sunflower</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    btf.addModeChange('mermaid', () => {
+      window.runMermaid()
+    })
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script async src="/js/title.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
